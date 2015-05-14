@@ -1,2 +1,4 @@
-# quickpromise
-Quick Promise - QML Promise Library
+# Quick Promise - QML Promise Library
+=====================================
+
+

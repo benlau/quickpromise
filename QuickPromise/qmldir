@@ -1,0 +1,4 @@
+module QuickPromise
+singleton Q 1.0 Q.qml
+Promise 1.0 Promise.qml
+
