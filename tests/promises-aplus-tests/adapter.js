@@ -1,0 +1,33 @@
+var fs = require('fs');
+
+var fileData = fs.readFileSync('../../QuickPromise/q.js',                               
+                               'utf8');
+
+var res = fileData.replace(/.pragma library/i,"")
+                  .replace(/.import.*/i,"")
+                  .replace(/QP.QPTimer./g,"");
+
+eval(res);
+
+var adapter = {
+    deferred: function() {
+        var p = promise();
+        return {
+            promise: p,
+            resolve: function(x) {p.resolve(x)},
+            reject: function(x) {p.reject(x)}            
+        }        
+    },
+    rejected: function(reason) {
+        var p = promise();
+        p.reject(reason);
+        return p;
+    },
+    resolved: function(value) {
+        var p = promise();
+        p.resolve(value);
+        return p;
+    }
+}
+
+module.exports = adapter;

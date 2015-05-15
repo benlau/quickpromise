@@ -35,10 +35,10 @@ function instanceOfPromise(object) {
 
 Promise.prototype.then = function(onFulfilled,onRejected) {
 
-    if (onFulfilled)
+    if (onFulfilled && typeof onFulfilled === "function" )
         this._onFulfilled.push(onFulfilled);
 
-    if (onRejected)
+    if (onRejected && typeof onRejected === "function")
         this._onRejected.push(onRejected);
 
     if (!this._thenPromise) {
