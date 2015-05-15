@@ -45,7 +45,8 @@ Promise.prototype.then = function(onFulfilled,onRejected) {
                 var x = onFulfilled(value);
                 thenPromise.resolve(x);
             } catch (e) {
-                console.trace(e);
+                console.error(e);
+                console.trace();
                 thenPromise.reject(e);
             }
 
@@ -61,7 +62,8 @@ Promise.prototype.then = function(onFulfilled,onRejected) {
                 var x = onRejected(reason);
                 thenPromise.resolve(x);
             } catch (e) {
-                console.trace(e);                
+                console.error(e);
+                console.trace();
                 thenPromise.reject(e);
             }
         } else {
@@ -110,7 +112,8 @@ Promise.prototype.resolve = function(value) {
         try {
             then = value.then;
         } catch (e) {
-            console.trace(e);
+            console.error(e);
+            console.trace();
             promise.reject(e);
             return;
         }
@@ -131,7 +134,8 @@ Promise.prototype.resolve = function(value) {
                     promise.reject(y);                
                 });  
             } catch (e) {
-                console.trace(e);
+                console.error(e);
+                console.trace();
                 if (!called) {
                     promise.reject(e);    
                 }
