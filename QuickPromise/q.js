@@ -74,7 +74,7 @@ Promise.prototype.resolve = function(value) {
         return;
 
     if (this === value) { // 2.3.1
-        this.reject("TypeError");
+        this.reject(new TypeError("Promise.resolve(value) : The value can not be same as the promise object."));
         return;
     }
 
