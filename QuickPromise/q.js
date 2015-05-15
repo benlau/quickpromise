@@ -29,6 +29,9 @@ function Promise() {
 function instanceOfPromise(object) {
     if (typeof object !== "object")
         return false;
+    
+    if (typeof object.hasOwnProperty !== "function")
+        return false;
 
     return object.hasOwnProperty("___promiseSignature___");
 }
@@ -42,6 +45,7 @@ Promise.prototype.then = function(onFulfilled,onRejected) {
                 var x = onFulfilled(value);
                 thenPromise.resolve(x);
             } catch (e) {
+                console.trace(e);
                 thenPromise.reject(e);
             }
 
@@ -57,6 +61,7 @@ Promise.prototype.then = function(onFulfilled,onRejected) {
                 var x = onRejected(reason);
                 thenPromise.resolve(x);
             } catch (e) {
+                console.trace(e);                
                 thenPromise.reject(e);
             }
         } else {
@@ -78,11 +83,12 @@ Promise.prototype.resolve = function(value) {
         return;
     }
 
+    var promise = this;
+    
     if (value &&
         instanceOfPromise(value)) {
 
         if (value.state === "pending") {
-            var promise = this;
             value.then(function(x) {
                 promise._resolveInTick(x);
             },function(x) {
@@ -97,6 +103,41 @@ Promise.prototype.resolve = function(value) {
             this.reject(value._result);
             return;
         }
+    }
+    
+    if (value !== null && (typeof value === "object" || typeof value === "function")) {
+        var then;
+        try {
+            then = value.then;
+        } catch (e) {
+            console.trace(e);
+            promise.reject(e);
+            return;
+        }
+        
+        if (typeof then === "function") {
+            try {
+                var called = false;
+                then.call(value,function(y) {
+                    if (called)
+                        return;
+                    called = true;
+                    promise.resolve(y);
+                },function (y) {
+                    if (called)
+                        return;
+
+                    called = true;
+                    promise.reject(y);                
+                });  
+            } catch (e) {
+                console.trace(e);
+                if (!called) {
+                    promise.reject(e);    
+                }
+            }
+            return;
+        }        
     }
 
     this._resolveInTick(value);
