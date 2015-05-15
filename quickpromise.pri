@@ -1,4 +1,4 @@
-QT += qml quick widgets
+QT += qml
 
 QML_IMPORT_PATH += $$PWD
 

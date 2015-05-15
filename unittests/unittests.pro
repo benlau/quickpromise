@@ -1,5 +1,5 @@
 QT       += core
-QT       += testlib gui declarative quick qml qmltest
+QT       += testlib gui quick qml qmltest
 
 TARGET = unittests
 CONFIG   += console
