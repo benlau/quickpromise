@@ -11,7 +11,7 @@
 
 function Promise() {
 
-    this._state = "pending";
+    this.state = "pending";
 
     this._onFulfilled = [];
     this._onRejected = [];
@@ -50,7 +50,7 @@ Promise.prototype.then = function(onFulfilled,onRejected) {
 
 
 Promise.prototype.resolve = function(value) {
-    if (this._state !== "pending")
+    if (this.state !== "pending")
         return;
 
     if (this === value) { // 2.3.1
@@ -61,7 +61,7 @@ Promise.prototype.resolve = function(value) {
     if (value &&
         instanceOfPromise(value)) {
 
-        if (value._state === "pending") {
+        if (value.state === "pending") {
             var promise = this;
             value.then(function(x) {
                 promise._resolveInTick(x);
@@ -70,10 +70,10 @@ Promise.prototype.resolve = function(value) {
             });
 
             return;
-        } else if (value._state === "fulfilled") {
+        } else if (value.state === "fulfilled") {
             this._resolveInTick(value._result);
             return;
-        } else if (value._state === "rejected") {
+        } else if (value.state === "rejected") {
             this.reject(value._result);
             return;
         }
@@ -86,7 +86,7 @@ Promise.prototype._resolveInTick = function(value) {
     var promise = this;
 
     QP.QPTimer.setTimeout(function() {
-        if (promise._state !== "pending")
+        if (promise.state !== "pending")
             return;
 
         promise._resolveUnsafe(value);
@@ -119,13 +119,13 @@ Promise.prototype._resolveUnsafe = function(value) {
 }
 
 Promise.prototype.reject = function(reason) {
-    if (this._state !== "pending")
+    if (this.state !== "pending")
         return;
 
     var promise = this;
 
     QP.QPTimer.setTimeout(function() {
-        if (promise._state !== "pending")
+        if (promise.state !== "pending")
             return;
 
         promise._rejectUnsafe(reason);
@@ -176,7 +176,7 @@ Promise.prototype._setState = function(state) {
         this._onFullfilled = [];
         this._onRejected = [];
     }
-    this._state = state;
+    this.state = state;
 }
 
 // Combinate a list of promises into a single promise object.

@@ -69,7 +69,7 @@ TestCase {
         promise1.resolve("x");
         tick();
 
-        compare(promise2._state , "rejected");
+        compare(promise2.state , "rejected");
         compare(String(promise2._result) , "Error: Expected Error for Testing");
     }
 
@@ -115,9 +115,9 @@ TestCase {
         var promise2 = promise1.then(function() {} , function() {});
 
         promise1.resolve(promise1);
-        compare(promise1._state , "pending");
+        compare(promise1.state , "pending");
         tick();
-        compare(promise1._state , "rejected");
+        compare(promise1.state , "rejected");
     }
 
     function test_2_3_2_1() {
@@ -126,14 +126,14 @@ TestCase {
         var promise2 = promise1.then(function() {} , function() {});
 
         promise1.resolve(promiseSrc);
-        compare(promise1._state, "pending");
+        compare(promise1.state, "pending");
 
         promiseSrc.resolve("x");
         tick();
-        compare(promise1._state, "fulfilled");
+        compare(promise1.state, "fulfilled");
 
         promiseSrc.reject("x");
-        compare(promise1._state, "fulfilled");
+        compare(promise1.state, "fulfilled");
     }
 
     function test_2_3_2_2() {
@@ -148,7 +148,7 @@ TestCase {
 
         promise1.resolve(promiseSrc);
         tick();
-        compare(promise1._state, "fulfilled");
+        compare(promise1.state, "fulfilled");
         compare(resolvedValue, "x");
     }
 
@@ -165,9 +165,9 @@ TestCase {
         promiseSrc.reject("x");
 
         promise1.resolve(promiseSrc);
-        compare(promise1._state, "pending");
+        compare(promise1.state, "pending");
         tick();
-        compare(promise1._state, "rejected");
+        compare(promise1.state, "rejected");
         compare(rejectedValue, "x");
     }
 
@@ -178,16 +178,16 @@ TestCase {
         var promise3 = Q.promise();
 
         var allPromise = Q.all([promise1,promise2,promise3]);
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise1.resolve("a");
         tick();
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise2.resolve("b");
         tick();
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise3.resolve("c");
         tick();
-        compare(allPromise._state ,"fulfilled");
+        compare(allPromise.state ,"fulfilled");
         compare(allPromise._result,"c");
 
         // Condition 2. Reject one of the promise
@@ -196,11 +196,11 @@ TestCase {
         promise3 = Q.promise();
 
         allPromise = Q.all([promise1,promise2,promise3]);
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise2.reject();
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         tick();
-        compare(allPromise._state ,"rejected");
+        compare(allPromise.state ,"rejected");
 
         // Condition 3: Insert rejected promise
         promise1 = Q.promise();
@@ -209,9 +209,9 @@ TestCase {
         promise2.reject();
 
         allPromise = Q.all([promise1,promise2,promise3]);
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         tick();
-        compare(allPromise._state ,"rejected");
+        compare(allPromise.state ,"rejected");
 
         // Condition 4: All the promise is fulfilled already
 
@@ -225,7 +225,7 @@ TestCase {
 
         allPromise = Q.all([promise1,promise2,promise3]);
         tick();
-        compare(allPromise._state ,"fulfilled");
+        compare(allPromise.state ,"fulfilled");
     }
 
     function test_q_allSettled() {
@@ -235,16 +235,16 @@ TestCase {
         var promise3 = Q.promise();
 
         var allPromise = Q.allSettled([promise1,promise2,promise3]);
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise1.resolve("a");
         tick();
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise2.resolve("b");
         tick();
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise3.resolve("c");
         tick();
-        compare(allPromise._state ,"fulfilled");
+        compare(allPromise.state ,"fulfilled");
         compare(allPromise._result,"c");
 
         // Condition 2. Reject one of the promise
@@ -253,17 +253,17 @@ TestCase {
         promise3 = Q.promise();
 
         allPromise = Q.allSettled([promise1,promise2,promise3]);
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
 
         promise2.reject();
         tick();
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise3.resolve();
         tick();
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise1.resolve();
         tick();
-        compare(allPromise._state ,"rejected");
+        compare(allPromise.state ,"rejected");
 
         // Condition 3: Insert rejected promise
         promise1 = Q.promise();
@@ -273,13 +273,13 @@ TestCase {
 
         allPromise = Q.allSettled([promise1,promise2,promise3]);
         tick();
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise1.resolve();
         tick();
-        compare(allPromise._state ,"pending");
+        compare(allPromise.state ,"pending");
         promise3.resolve();
         tick();
-        compare(allPromise._state ,"rejected");
+        compare(allPromise.state ,"rejected");
 
         // Condition 4: All the promise is fulfilled already
 
@@ -293,7 +293,7 @@ TestCase {
 
         allPromise = Q.allSettled([promise1,promise2,promise3]);
         tick();
-        compare(allPromise._state ,"fulfilled");
+        compare(allPromise.state ,"fulfilled");
     }
 
     Component {
