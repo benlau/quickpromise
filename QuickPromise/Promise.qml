@@ -16,7 +16,7 @@ QtObject {
 
     property bool isSettled : isFulfilled || isRejected
 
-    /// An expression that will trigger resolve() if the value become true or another promise object. It should be set once only.
+    /// An expression that will trigger resolve() if the value become true or another promise object got resolved.
     property var resolveWhen
 
     /// An expression that will trigger reject() if the value become true. Don't assign another promise object here.
@@ -34,18 +34,6 @@ QtObject {
     property var ___promiseQmlSignature71237___
 
     property var _thenPromise : null;
-
-    /*
-    function setTimeout(callback,interval) {
-        var obj = Qt.createQmlObject('import QtQuick 2.2; Timer {running: false; repeat: false; }', promise, "setTimeout");
-        obj.interval = interval;
-        obj.triggered.connect(function() {
-            obj.destroy();
-            callback();
-        });
-        obj.running = true;
-    }
-    */
 
     function setTimeout(callback,interval) {
         QPTimer.setTimeout(callback,interval);
