@@ -9,7 +9,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-include(../quickpromise.pri)
+include(../../quickpromise.pri)
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\" BASEDIR=\\\"$$PWD/..\\\"
 
