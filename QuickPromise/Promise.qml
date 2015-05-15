@@ -33,8 +33,6 @@ QtObject {
     /// Random signature for type checking
     property var ___promiseQmlSignature71237___
 
-    property var _thenPromise : null;
-
     function setTimeout(callback,interval) {
         QPTimer.setTimeout(callback,interval);
     }

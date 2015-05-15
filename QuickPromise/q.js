@@ -34,18 +34,38 @@ function instanceOfPromise(object) {
 }
 
 Promise.prototype.then = function(onFulfilled,onRejected) {
+    var thenPromise = new Promise();
 
-    if (onFulfilled && typeof onFulfilled === "function" )
-        this._onFulfilled.push(onFulfilled);
+    this._onFulfilled.push(function(value) {
+        if (typeof onFulfilled === "function" ) {
+            try {
+                var x = onFulfilled(value);
+                thenPromise.resolve(x);
+            } catch (e) {
+                thenPromise.reject(e);
+            }
 
-    if (onRejected && typeof onRejected === "function")
-        this._onRejected.push(onRejected);
+        } else {
+            // 2.2.7.3
+            thenPromise.resolve(value);
+        }
+    });
 
-    if (!this._thenPromise) {
-        this._thenPromise = new Promise();
-    }
+    this._onRejected.push(function(reason) {
+        if (typeof onRejected === "function") {
+            try {
+                var x = onRejected(reason);
+                thenPromise.resolve(x);
+            } catch (e) {
+                thenPromise.reject(e);
+            }
+        } else {
+            // 2.2.7.4
+            thenPromise.reject(reason);
+        }
+    });
 
-    return this._thenPromise;
+    return thenPromise;
 }
 
 
@@ -99,20 +119,7 @@ Promise.prototype._resolveInTick = function(value) {
 
 Promise.prototype._resolveUnsafe = function(value) {
 
-    try {
-        var ret = this._emit(this._onFulfilled,value);
-
-        if (this._thenPromise) {
-            this._thenPromise.resolve(ret);
-        }
-
-    } catch (e) {
-
-        if (this._thenPromise) {
-            this._thenPromise.reject(e);
-        }
-
-    }
+    this._emit(this._onFulfilled,value);
 
     this._result = value;
     this._setState("fulfilled");
@@ -133,19 +140,7 @@ Promise.prototype.reject = function(reason) {
 }
 
 Promise.prototype._rejectUnsafe = function(reason) {
-    try {
-        var ret = this._emit(this._onRejected,reason);
-
-        if (this._thenPromise) {
-            this._thenPromise.resolve(ret);
-        }
-
-    } catch (e) {
-
-        if (this._thenPromise) {
-            this._thenPromise.reject(ret);
-        }
-    }
+    this._emit(this._onRejected,reason);
 
     this._result = reason;
     this._setState("rejected");

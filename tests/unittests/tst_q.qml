@@ -99,7 +99,7 @@ TestCase {
 
         compare(promise2 !== undefined,true);
         var resolvedValue;
-        promise2.then(function(value) {
+        promise2.then(undefined,function(value) {
             resolvedValue = value;
         });
 
