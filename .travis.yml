@@ -5,10 +5,11 @@ compiler:
   - gcc
 before_install:
     - sudo add-apt-repository --yes ppa:beineri/opt-qt532
+    - sudo add-apt-repository --yes ppa:chris-lea/node.js
     - sudo apt-get update -qq
     - apt-cache search qt5
     - sudo apt-get install -qq qt53quickcontrols  qt53declarative qt53script qt53graphicaleffects
-
+    - sudo apt-get install nodejs
     - sh -e /etc/init.d/xvfb start
 script:
     - source /opt/qt53/bin/qt53-env.sh 
@@ -17,4 +18,7 @@ script:
     - make
     - ls
     - ./unittests
+    - cd ../promises-aplus-tests/
+    - npm install .
+    - node ./run.js
 
