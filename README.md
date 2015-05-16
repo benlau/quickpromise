@@ -1,6 +1,12 @@
-# Quick Promise - QML Promise Library
+<a href="https://promisesaplus.com/">
+    <img src="https://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ logo"
+         title="Promises/A+ 1.0 compliant" align="right" />
+</a>
 
-The Promise object is used for deferred and asynchronous computation. It is widely used in Javascript application. QuickPromise is an implementation of Promise object for QT/QML. It has followed the [https://promisesaplus.com/](Promise/A+) standard plus extra support for QML component. 
+Quick Promise - QML Promise Library
+===
+
+The Promise object is widely used for deferred and asynchronous computation in Javascript Application. Quick Promise is an implementation of Promise object for QT/QML. It has followed the [Promises/A+](https://promisesaplus.com/) standard plus extra support for QML component. 
 
 
 ```
@@ -42,9 +48,21 @@ Item {
 
 ```
 
-The code above demonstrated how Promise component could be used in asynchronous workflow. The resolveWhen property accepts a boolean expression. Once the expression comes truth, it will trigger the “onFulfilled” slot in next execution context stack (Qt::QueuedConnection). *The slot will be executed for once only*.
+The code above demonstrated how Promise component could be used in asynchronous workflow for QML application. The resolveWhen property accepts a boolean expression. Once the result of expression becomes truth, it will trigger the “onFulfilled” slot via queued Connection. *The slot will be executed for once only*.
 
-QuickPromise implemented two set of Promise object. The first is QML-based which was shown in the above example. Another one is for pure Javascript environment , you don't need to declare the component and just used like other Promise implementation in Javascript applicaiton.
+Feature List
+
+1. Promises/A+ Conformant Implementation.
+2. Both of QML and Javascript interfaces are available.
+3. QML Component Interface
+ 1. Trigger resolve()/reject() via binary expression from resloveWhen / rejectWhen property
+ 2. isFulfilled / isRejected / isSettled properties for data binding.
+ 3. fulfulled , rejected , settled signals
+4. Pure Javascript API
+ 1. Unlike QML component, it don’t need to declare before use it.
+ 2. The API interface is compatible with Promises/A+ standard just like many other Promise solution
+5. Q.setTimeout() - A implementation of setTimeout() function for QML.
+
 
 Promise QML Componnet
 =====================
