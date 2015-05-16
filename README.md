@@ -39,7 +39,7 @@ Item {
     }
 
     Promise {
-        resolveWhen: image1.status === Image.Ready || image2.status === Image.Ready
+        resolveWhen: image1.status === Image.Ready && image2.status === Image.Ready
         onFulfilled:  {
             anim.start();
         }
