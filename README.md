@@ -77,7 +77,13 @@ Instruction of use
 
     include(quickpromise/quickpromise.pri) # You should modify the path by yourself
 
-3) Add import statement in your QML file
+ 3) Add "qrc://" to your QML import path
+
+``` 
+engine.addImportPath("qrc:///"); // QQmlEngine
+```
+
+ 4) Add import statement in your QML file
 
 ```
 import QuickPromise 1.0
