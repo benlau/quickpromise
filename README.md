@@ -6,8 +6,9 @@
 Quick Promise - QML Promise Library
 ===
 
-The Promise object is widely used for deferred and asynchronous computation in Javascript Application. Quick Promise is an implementation of Promise object for QT/QML. It has followed the [Promises/A+](https://promisesaplus.com/) standard plus extra support for QML component. 
+The Promise object is widely used for deferred and asynchronous computation in Javascript Application. Quick Promise is an implementation of Promise object for QT/QML. The API design is compliant with [Promises/A+](https://promisesaplus.com/). Users with experience of other compliant solution can get started easily. Moreover, it has provided extra support for QML likes property binding and signal.
 
+*Example:*
 
 ```
 import QtQuick 2.0
@@ -51,18 +52,36 @@ Item {
 The code above demonstrated how Promise component could be used in asynchronous workflow for QML application. The resolveWhen property accepts a boolean expression. Once the result of expression becomes truth, it will trigger the “onFulfilled” slot via queued Connection. *The slot will be executed for once only*.
 
 Feature List
+------------
 
 1. Promises/A+ Conformant Implementation.
-2. Both of QML and Javascript interfaces are available.
+2. Both of QML and Javascript component are available.
 3. QML Component Interface
  1. Trigger resolve()/reject() via binary expression from resloveWhen / rejectWhen property
  2. isFulfilled / isRejected / isSettled properties for data binding.
  3. fulfulled , rejected , settled signals
 4. Pure Javascript API
  1. Unlike QML component, it don’t need to declare before use it.
- 2. The API interface is compatible with Promises/A+ standard just like many other Promise solution
+ 2. The API interface is fully compatible with Promises/A+ standard. It is easy to get started.
 5. Q.setTimeout() - A implementation of setTimeout() function for QML.
 
+
+Instruction of use
+==================
+
+ 1) Clone this repository to a folder within your source tree.
+
+(You may use `git submodule` to embed this repository)
+
+ 2) Add this line to your profile file(.pro):
+
+    include(quickpromise/quickpromise.pri) # You should modify the path by yourself
+
+3) Add import statement in your QML file
+
+```
+import QuickPromise 1.0
+```
 
 Promise QML Componnet
 =====================
