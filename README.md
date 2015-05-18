@@ -69,7 +69,7 @@ Feature List
 Instruction of use
 ==================
 
- 1) Clone this repository to a folder within your source tree.
+ 1) Clone this repository or download release to a folder within your source tree.
 
 (You may use `git submodule` to embed this repository)
 
