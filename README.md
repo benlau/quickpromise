@@ -2,9 +2,9 @@
     <img src="https://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ logo"
          title="Promises/A+ 1.0 compliant" align="right" />
 </a>
-
 Quick Promise - QML Promise Library
-===
+===================================
+[![Build Status](https://travis-ci.org/benlau/quickpromise.svg?branch=master)](https://travis-ci.org/benlau/quickpromise)
 
 The Promise object is widely used for deferred and asynchronous computation in Javascript Application. Quick Promise is an implementation of Promise object for QT/QML. The API design is compliant with [Promises/A+](https://promisesaplus.com/). Users with experience of other compliant solution can get started easily. Moreover, it has provided extra support for QML likes property binding and signal.
 

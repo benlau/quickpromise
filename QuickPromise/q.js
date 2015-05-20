@@ -5,8 +5,6 @@
 .import QuickPromise 1.0 as QP
 
 /* JavaScript implementation of promise
-
-  TODO : Implement the rule of 2.3.3
  */
 
 function Promise() {
