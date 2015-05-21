@@ -382,7 +382,7 @@ TestCase {
         compare(promise.isRejected,false);
         compare(promise.isSettled,false);
 
-        wait(0);wait(0);
+        tick();
 
         // resolveWhen should be done on next tick is
         // necessary for promise created via Component

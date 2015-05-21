@@ -6,7 +6,9 @@ Quick Promise - QML Promise Library
 ===================================
 [![Build Status](https://travis-ci.org/benlau/quickpromise.svg?branch=master)](https://travis-ci.org/benlau/quickpromise)
 
-The Promise object is widely used for deferred and asynchronous computation in Javascript Application. Quick Promise is an implementation of Promise object for QT/QML. The API design is compliant with [Promises/A+](https://promisesaplus.com/). Users with experience of other compliant solution can get started easily. Moreover, it has provided extra support for QML likes property binding and signal.
+The Promise object is widely used for deferred and asynchronous computation in Javascript Application. "Quick Promise” is a library that provides Promise object in QML way. It comes with a Promise component with signal and property. It could be resolved via a binary expression ,  another promise object, then trigger your callback by QueuedConnection.
+
+Moreover, it also provides Promise as Javascript object that don’t need to declare in QML way. The API is fully compliant with  [Promises/A+](https://promisesaplus.com/) specification (Passed all the test cases) and therefore it just works like many other Promise solution for Javascript application.
 
 *Example:*
 
@@ -49,7 +51,9 @@ Item {
 
 ```
 
-The code above demonstrated how Promise component could be used in asynchronous workflow for QML application. The resolveWhen property accepts a boolean expression. Once the result of expression becomes truth, it will trigger the “onFulfilled” slot via queued Connection. *The slot will be executed for once only*.
+The code above demonstrated how Promise component could be used in asynchronous workflow for QML application. The resolveWhen property accepts a boolean expression or another Promise object. Once the result of expression becomes truth, it will trigger the “onFulfilled” slot via queued Connection. *The slot will be executed for once only*.
+
+Remarks: The QML Promise component is not fully compliant with Promises/A+ specification.
 
 Feature List
 ------------
@@ -63,8 +67,9 @@ Feature List
 4. Pure Javascript API
  1. Unlike QML component, it don’t need to declare before use it.
  2. The API interface is fully compatible with Promises/A+ standard. It is easy to get started.
-5. Q.setTimeout() - A implementation of setTimeout() function for QML.
-
+5. Extra API
+ 1. Q.setTimeout() - A implementation of setTimeout() function for QML.
+ 2. all()/allSettled()  - Create a promise object from an array of promises
 
 Instruction of use
 ==================
@@ -140,15 +145,19 @@ Promise.prototype.reject = function(reason) { ... }
 ```
 
 Extra API
+---------
 
-Q.all(promises)
--------
+*Q.setTimeout(func,milliseconds)*
+
+The setTimeout() method will wait the specified number of milliseconds, and then execute the specified function. If the milliseconds is equal to zero, the behaviour will be same as QueuedConnection.
+
+
+*Q.all(promises)*
 
 Given an array of promises , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected.
 
 
-Q.allSettled(promises)
---------------
+*Q.allSettled(promises)*
 
 Given an array of promises , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected. It won't change the state until all the input promises are settled. 
 

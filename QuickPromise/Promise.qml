@@ -88,16 +88,9 @@ QtObject {
         _init();
 
         if (resolveWhen === true) {
-            // Resolve on next tick is necessary for promise
-            // created via Component and fulfill immediately
-            setTimeout(function() {
-                resolve();
-            },0);
-
+            resolve(resolveWhen);
         } else if (instanceOfPromise(resolveWhen) || Q.instanceOfPromise(resolveWhen)) {
-            setTimeout(function() {
-                resolve(resolveWhen);
-            },0);
+            resolve(resolveWhen);
         }
     }
 
