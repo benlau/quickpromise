@@ -74,9 +74,11 @@ QtObject {
     }
 
     function _instanceOfSignal(object) {
-        return typeof object === "object" &&
-                      object.hasOwnProperty("connect") &&
-                      object.hasOwnProperty("disconnect");
+        return (typeof object === "object" ||
+                typeof object === "function") &&
+                typeof object.hasOwnProperty === "function" &&
+                typeof object.connect === "function" &&
+                typeof object.disconnect === "function";
     }
 
     function _init() {

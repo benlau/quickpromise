@@ -10,7 +10,6 @@ TestCase {
         wait(0);
         wait(0);
         wait(0);
-        wait(0);
     }
 
     // The implementation is based on Promises/A+

@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QString importPath = "qrc:///";
     QStringList args = a.arguments();
-    QString executable = args.at(0);
+    QString executable = args.takeAt(0);
 
     char **s = (char**) malloc(sizeof(char*) * 10 );
     int idx = 0;
@@ -19,6 +19,11 @@ int main(int argc, char *argv[])
     s[idx++] = strdup(SRCDIR);
     s[idx++] = "-import";
     s[idx++] = strdup(importPath.toLocal8Bit().data());
+
+    foreach( QString arg,args) {
+        s[idx++] = strdup(arg.toUtf8().data());
+    }
+
     s[idx++] = 0;
 
 
