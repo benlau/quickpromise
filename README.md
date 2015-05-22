@@ -138,11 +138,11 @@ Promise {
 
 resolveWhen property is an alternative method to call resolve() in QML way. You may bind a binary expression, another promise, signal to the "resolveWhen" property. It may trigger the resolve() depend on its type and value.
 
-*resolveWhen(binary expression)*
+*resolveWhen: binary expression*
 
 Once the expression become true, it will trigger resolve(true).
 
-*resolveWhen(signal)*
+*resolveWhen: signal*
 
 Listen the signal, once it is triggered, it will call resolve().
 
@@ -160,7 +160,7 @@ Promise {
 }
 ```
 
-*resolveWhen(promise)*
+*resolveWhen: promise*
 
 It is equivalent to resolve(promise). It will adopt the state from the input promise object.
 
@@ -171,6 +171,20 @@ If x is fullfilled, call resolve().
 If x is rejected, call reject().
 
 If x is not settled, listen its state change. Once it is triggered, repeat the above steps.
+
+**rejectWhen**
+
+_rejectWhen_ property is an alternative method to call reject() in QML way. You may bind a binary expression, signal to this property. It may trigger the reject() depend on its type and value.
+
+Remarks: _rejectWhen_ can not take promise as parameter
+
+*rejectWhen: binary expression*
+
+Once the expression become true, it will trigger reject(true).
+
+*rejectWhen: signal*
+
+Listen the signal, once it is triggered, it will call reject().
 
 
 Q.promise()

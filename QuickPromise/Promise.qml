@@ -56,7 +56,15 @@ QtObject {
     }
 
     function reject(reason) {
-        _promise.reject(reason);
+        if (_instanceOfSignal(reason)) {
+            var promise = Q.promise();
+            reason.connect(function() {
+                promise.reject();
+            });
+            _promise.resolve(promise);
+        } else {
+            _promise.reject(reason);
+        }
     }
 
     /// Combine multiple promises into a single promise.
@@ -101,7 +109,9 @@ QtObject {
     onRejectWhenChanged: {
         _init();
         if (rejectWhen === true) {
-            reject();
+            reject(true);
+        } else if (_instanceOfSignal(rejectWhen)) {
+            reject(rejectWhen);
         }
     }
 
