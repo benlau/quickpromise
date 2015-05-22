@@ -34,6 +34,14 @@ function instanceOfPromise(object) {
     return object.hasOwnProperty("___promiseSignature___");
 }
 
+function _instanceOfSignal(object) {
+    return (typeof object === "object" ||
+            typeof object === "function") &&
+            typeof object.hasOwnProperty === "function" &&
+            typeof object.connect === "function" &&
+            typeof object.disconnect === "function";
+}
+
 Promise.prototype.then = function(onFulfilled,onRejected) {
     var thenPromise = new Promise();
 
@@ -84,6 +92,15 @@ Promise.prototype.resolve = function(value) {
     }
 
     var promise = this;
+
+    if (value && _instanceOfSignal(value)) {
+        // resolve(signal)
+        var newPromise = new Promise();
+        value.connect(function() {
+            newPromise.resolve();
+        });
+        value = newPromise;
+    }
     
     if (value &&
         instanceOfPromise(value)) {
@@ -104,7 +121,7 @@ Promise.prototype.resolve = function(value) {
             return;
         }
     }
-    
+
     if (value !== null && (typeof value === "object" || typeof value === "function")) {
         var then;
         try {
@@ -173,6 +190,13 @@ Promise.prototype.reject = function(reason) {
         return;
 
     var promise = this;
+
+    if (reason && _instanceOfSignal(reason)) {
+        reason.connect(function() {
+            promise.reject();
+        });
+        return;
+    }
 
     QP.QPTimer.setTimeout(function() {
         if (promise.state !== "pending")

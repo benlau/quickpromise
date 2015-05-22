@@ -134,6 +134,16 @@ Promise {
 }
 ```
 
+**isFullfilled**
+It is true if resolve() has been called on that promise object
+
+**isRejected**
+It is true if reject() has been called on that promise object
+
+**isSettled**
+It is true if either of isFullfilled or isRejected has been set. 
+
+
 **resolveWhen**
 
 resolveWhen property is an alternative method to call resolve() in QML way. You may bind a binary expression, another promise, signal to the "resolveWhen" property. It may trigger the resolve() depend on its type and value.
@@ -192,6 +202,10 @@ Q.promise()
 
 Q.promise() is the creator function of Promise object in Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. However, it don't support property binding (resolveWhen , rejectWhen) and signal (fulfilled, rejected , settled) like the Promise QML component.
 
+However, you may pass a signal object to resolve()/reject(). In this case, the promise will not change its state until the signal is triggered. If multiple signal call are made, the first signal call takes precedence, and any further calls are ignored.
+
+*API*
+
 ```
 Promise.prototype.then = function(onFulfilled,onRejected) { ... }
 Promise.prototype.resolve = function(value) { ... }
@@ -199,6 +213,7 @@ Promise.prototype.reject = function(reason) { ... }
 ```
 
 Instruction of using then/resolve/reject: [Promises](https://www.promisejs.org/)
+
 
 Extra API
 ---------

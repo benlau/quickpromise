@@ -44,27 +44,13 @@ QtObject {
     function resolve(value) {
         if (instanceOfPromise(value)) {
             value = value._promise;
-        } else if (_instanceOfSignal(value)) {
-            var promise = Q.promise();
-            value.connect(function() {
-                promise.resolve();
-            });
-            value = promise;
         }
 
         _promise.resolve(value);
     }
 
     function reject(reason) {
-        if (_instanceOfSignal(reason)) {
-            var promise = Q.promise();
-            reason.connect(function() {
-                promise.reject();
-            });
-            _promise.resolve(promise);
-        } else {
-            _promise.reject(reason);
-        }
+        _promise.reject(reason);
     }
 
     /// Combine multiple promises into a single promise.
@@ -82,11 +68,7 @@ QtObject {
     }
 
     function _instanceOfSignal(object) {
-        return (typeof object === "object" ||
-                typeof object === "function") &&
-                typeof object.hasOwnProperty === "function" &&
-                typeof object.connect === "function" &&
-                typeof object.disconnect === "function";
+        return Q._instanceOfSignal(object);
     }
 
     function _init() {
