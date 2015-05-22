@@ -91,7 +91,9 @@ QtObject {
 
         if (resolveWhen === true) {
             resolve(resolveWhen);
-        } else if (instanceOfPromise(resolveWhen) || Q.instanceOfPromise(resolveWhen)) {
+        } else if (instanceOfPromise(resolveWhen) ||
+                   Q.instanceOfPromise(resolveWhen) ||
+                   _instanceOfSignal(resolveWhen)) {
             resolve(resolveWhen);
         }
     }

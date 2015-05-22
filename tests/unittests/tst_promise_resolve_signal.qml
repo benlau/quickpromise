@@ -22,7 +22,7 @@ TestCase {
         compare(typeof customItem.emitted.disconnect,"function");
         compare(typeof customItem.emitted.hasOwnProperty,"function");
 
-        compare(typeof customItem.onEmitted,"object");
+        compare(typeof customItem.onEmitted,"object"); // That is the differnet between custom type and built-in type
         compare(typeof customItem.onEmitted.connect,"function");
         compare(typeof customItem.onEmitted.disconnect,"function");
         compare(typeof customItem.onEmitted.hasOwnProperty,"function")
@@ -32,7 +32,7 @@ TestCase {
         compare(typeof builtInItem.triggered.disconnect,"function");
         compare(typeof builtInItem.triggered.hasOwnProperty,"function");
 
-        compare(typeof builtInItem.onTriggered,"function"); // That is the differnet between custom type and built-in type
+        compare(typeof builtInItem.onTriggered,"function");
         compare(typeof builtInItem.onTriggered.connect,"function");
         compare(typeof builtInItem.onTriggered.disconnect,"function");
         compare(typeof builtInItem.onTriggered.hasOwnProperty,"function");

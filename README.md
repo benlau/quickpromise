@@ -71,8 +71,8 @@ Feature List
  1. Q.setTimeout() - A implementation of setTimeout() function for QML.
  2. all()/allSettled()  - Create a promise object from an array of promises
 
-Instruction of use
-==================
+Installation Instruction
+========================
 
  1) Clone this repository or download release to a folder within your source tree.
 
@@ -93,6 +93,11 @@ engine.addImportPath("qrc:///"); // QQmlEngine
 ```
 import QuickPromise 1.0
 ```
+
+What is Promise and how to use it?
+==========================
+
+Please refer to this site for core concept : [Promises](https://www.promisejs.org/)
 
 Promise QML Componnet
 =====================
@@ -131,6 +136,44 @@ Promise {
 }
 ```
 
+**resolveWhen**
+
+resolveWhen property is an alternative method to call resolve() in QML way. You may bind a binary expression, another promise, signal to the "resolveWhen" property. It may trigger the resolve() depend on its type and value.
+
+*resolveWhen(binary expression)*
+
+Once the expression become true, it will trigger resolve(true).
+
+*resolveWhen(signal)*
+
+Listen the signal, once it is triggered, it will call resolve().
+
+Example:
+```
+Timer {
+    id: timer;
+    repeat: true
+    interval : 50
+}
+
+Promise {
+    id : promise
+    resolveWhen: timer.onTriggered
+}
+```
+
+*resolveWhen(promise)*
+
+It is equivalent to resolve(promise). It will adopt the state from the input promise object.
+
+Let x be the input promise.
+
+If x is fullfilled, call resolve().
+
+If x is rejected , call reject().
+
+If x is not settled, listen its state change. Once it is triggered, repeat the above steps.
+
 
 Q.promise()
 ===========
@@ -147,17 +190,17 @@ Promise.prototype.reject = function(reason) { ... }
 Extra API
 ---------
 
-*Q.setTimeout(func,milliseconds)*
+**Q.setTimeout(func,milliseconds)**
 
 The setTimeout() method will wait the specified number of milliseconds, and then execute the specified function. If the milliseconds is equal to zero, the behaviour will be same as QueuedConnection.
 
 
-*Q.all(promises)*
+**Q.all(promises)**
 
 Given an array of promises , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected.
 
 
-*Q.allSettled(promises)*
+**Q.allSettled(promises)**
 
 Given an array of promises , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected. It won't change the state until all the input promises are settled. 
 
