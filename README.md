@@ -6,7 +6,7 @@ Quick Promise - QML Promise Library
 ===================================
 [![Build Status](https://travis-ci.org/benlau/quickpromise.svg?branch=master)](https://travis-ci.org/benlau/quickpromise)
 
-The Promise object is widely used for deferred and asynchronous computation in Javascript Application. "Quick Promise” is a library that provides Promise object in QML way. It comes with a Promise component with signal and property. It could be resolved via a binary expression ,  another promise object, then trigger your callback by QueuedConnection.
+The Promise object is widely used for deferred and asynchronous computation in Javascript Application. "Quick Promise” is a library that provides Promise object in QML way. It comes with a Promise component with signal and property. It could be resolved via a binary expression,  another promise object, then trigger your callback by QueuedConnection.
 
 Moreover, it also provides Promise as Javascript object that don’t need to declare in QML way. The API is fully compliant with  [Promises/A+](https://promisesaplus.com/) specification (Passed all the test cases) and therefore it just works like many other Promise solution for Javascript application.
 
@@ -58,16 +58,14 @@ Remarks: The QML Promise component is not fully compliant with Promises/A+ speci
 Feature List
 ------------
 
-1. Promises/A+ Conformant Implementation.
-2. Both of QML and Javascript component are available.
-3. QML Component Interface
- 1. Trigger resolve()/reject() via binary expression from resloveWhen / rejectWhen property
+1. Promise in QML way
+ 1. Trigger resolve()/reject() via binary expression, signal from resloveWhen / rejectWhen property
  2. isFulfilled / isRejected / isSettled properties for data binding.
  3. fulfulled , rejected , settled signals
-4. Pure Javascript API
+2. Promise in Javascript way
  1. Unlike QML component, it don’t need to declare before use it.
- 2. The API interface is fully compatible with Promises/A+ standard. It is easy to get started.
-5. Extra API
+ 2. The API interface is fully compatible with [Promises/A+](https://promisesaplus.com/) specification. It is easy to get started.
+3. Extra API
  1. Q.setTimeout() - A implementation of setTimeout() function for QML.
  2. all()/allSettled()  - Create a promise object from an array of promises
 
@@ -170,7 +168,7 @@ Let x be the input promise.
 
 If x is fullfilled, call resolve().
 
-If x is rejected , call reject().
+If x is rejected, call reject().
 
 If x is not settled, listen its state change. Once it is triggered, repeat the above steps.
 
@@ -178,14 +176,15 @@ If x is not settled, listen its state change. Once it is triggered, repeat the a
 Q.promise()
 ===========
 
-Q.promise() is the creator function of Promise object for Javascript code. You won't need to declare a QML component before use it. As it follow the Promise/A+ standard , the API is very similar to other implementation. However, it don't support property binding (resolveWhen , rejectWhen) and signal (fulfilled, rejected , settled) like the Promise QML component. 
+Q.promise() is the creator function of Promise object in Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. However, it don't support property binding (resolveWhen , rejectWhen) and signal (fulfilled, rejected , settled) like the Promise QML component.
 
 ```
 Promise.prototype.then = function(onFulfilled,onRejected) { ... }
 Promise.prototype.resolve = function(value) { ... }
 Promise.prototype.reject = function(reason) { ... }
-
 ```
+
+Instruction of using then/resolve/reject: [Promises](https://www.promisejs.org/)
 
 Extra API
 ---------
