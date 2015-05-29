@@ -20,31 +20,27 @@ Item {
     id: item
     opacity: 0
 
-    Column {
-        Image {
-            id : image1
-            asynchronous: true
-            source : "https://lh3.googleusercontent.com/_yimBU8uLUTqQQ9gl5vODqDufdZ_cJEiKnx6O6uNkX6K9lT63MReAWiEonkAVatiPxvWQu7GDs8=s640-h400-e365-rw";
-        }
-
-        Image {
-            id : image2
-            asynchronous: true
-            source : "https://lh6.googleusercontent.com/RJtB863D-avwKyz3nuhcDZTCQ8SFL_27jHYuJ5gWurk72P2WMUyUvKDfIUlBxfFMkKMEL7luiA=s640-h400-e365-rw";
-        }
+    Image {
+        id : image
+        asynchronous: true
+        source : "https://lh3.googleusercontent.com/_yimBU8uLUTqQQ9gl5vODqDufdZ_cJEiKnx6O6uNkX6K9lT63MReAWiEonkAVatiPxvWQu7GDs8=s640-h400-e365-rw";
     }
-
-    PropertyAnimation {
-        id: anim
-        target: item; property: "opacity"
-        from : "0"; to: "1";
-        duration: 5000
+    
+    Timer {
+        id: timer
+        interval: 3000    
     }
 
     Promise {
-        resolveWhen: image1.status === Image.Ready && image2.status === Image.Ready
+        // Resolve when the image is ready
+        resolveWhen: image.status === Image.Ready
+        
+        // Reject when time out.
+        rejectWhen: timer.triggered
+        
         onFulfilled:  {
-            anim.start();
+            // If the timer is reached, the image will not be shown even it is ready.
+            item.opacity = 1;
         }
     }
 }
@@ -126,7 +122,7 @@ Promise {
 
     function resolve(value) { ... }
     
-    function reject(value) { ... }
+    function reject(reason) { ... }
     
     function all(promises) { ... }
 
@@ -148,11 +144,11 @@ It is true if either of isFullfilled or isRejected has been set.
 
 resolveWhen property is an alternative method to call resolve() in QML way. You may bind a binary expression, another promise, signal to the "resolveWhen" property. It may trigger the resolve() depend on its type and value.
 
-*resolveWhen: binary expression*
+**resolveWhen: binary expression**
 
 Once the expression become true, it will trigger resolve(true).
 
-*resolveWhen: signal*
+**resolveWhen: signal**
 
 Listen the signal, once it is triggered, it will call resolve().
 
@@ -170,7 +166,7 @@ Promise {
 }
 ```
 
-*resolveWhen: promise*
+**resolveWhen: promise**
 
 It is equivalent to resolve(promise). It will adopt the state from the input promise object.
 
@@ -188,11 +184,11 @@ _rejectWhen_ property is an alternative method to call reject() in QML way. You 
 
 Remarks: _rejectWhen_ can not take promise as parameter
 
-*rejectWhen: binary expression*
+**rejectWhen: binary expression**
 
 Once the expression become true, it will trigger reject(true).
 
-*rejectWhen: signal*
+**rejectWhen: signal**
 
 Listen the signal, once it is triggered, it will call reject().
 
@@ -200,7 +196,7 @@ Listen the signal, once it is triggered, it will call reject().
 Q.promise()
 ===========
 
-Q.promise() is the creator function of Promise object in Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. However, it don't support property binding (resolveWhen , rejectWhen) and signal (fulfilled, rejected , settled) like the Promise QML component.
+Q.promise() is the creator function of Promise object in Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. But it don't support property binding (resolveWhen , rejectWhen) and signal (fulfilled, rejected , settled) like the Promise QML component.
 
 However, you may pass a signal object to resolve()/reject(). In this case, the promise will not change its state until the signal is triggered. If multiple signal call are made, the first signal call takes precedence, and any further calls are ignored.
 
