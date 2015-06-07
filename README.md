@@ -8,7 +8,7 @@ Quick Promise - QML Promise Library
 
 The Promise object is widely used for deferred and asynchronous computation in Javascript Application. "Quick Promise” is a library that provides Promise object in QML way. It comes with a Promise component with signal and property. It could be resolved via a binary expression,  another promise object, then trigger your callback by QueuedConnection.
 
-Moreover, it also provides Promise as Javascript object that don’t need to declare in QML way. The API is fully compliant with  [Promises/A+](https://promisesaplus.com/) specification (Passed all the test cases) and therefore it just works like many other Promise solution for Javascript application.
+Moreover, it also provides Promise as a Javascript object that don’t need to declare in QML way. The API is fully compliant with  [Promises/A+](https://promisesaplus.com/) specification with all the test cases passed and therefore it just works like many other Promise solutions for Javascript application.
 
 *Example:*
 
@@ -47,22 +47,22 @@ Item {
 
 ```
 
-The code above demonstrated how Promise component could be used in asynchronous workflow for QML application. The resolveWhen property accepts a boolean expression or another Promise object. Once the result of expression becomes truth, it will trigger the “onFulfilled” slot via queued Connection. *The slot will be executed for once only*.
+The code above demonstrated how Promise component could be used in asynchronous workflow for QML application. The resolveWhen property accepts a boolean expression, another Promise object and signal. Once the result of expression becomes truth, it will trigger the “onFulfilled” slot via queued Connection. *The slot will be executed for once only*.
 
 Remarks: The QML Promise component is not fully compliant with Promises/A+ specification.
 
 Feature List
 ------------
 
-1. Promise in QML way
+1. Promise in a QML way
  1. Trigger resolve()/reject() via binary expression, signal from resloveWhen / rejectWhen property
  2. isFulfilled / isRejected / isSettled properties for data binding.
  3. fulfulled , rejected , settled signals
-2. Promise in Javascript way
+2. Promise in a Javascript way
  1. Unlike QML component, it don’t need to declare before use it.
  2. The API interface is fully compatible with [Promises/A+](https://promisesaplus.com/) specification. It is easy to get started.
 3. Extra API
- 1. Q.setTimeout() - A implementation of setTimeout() function for QML.
+ 1. Q.setTimeout() - An implementation of setTimeout() function for QML.
  2. all()/allSettled()  - Create a promise object from an array of promises
 
 Installation Instruction
@@ -142,7 +142,7 @@ It is true if either of isFullfilled or isRejected has been set.
 
 **resolveWhen**
 
-resolveWhen property is an alternative method to call resolve() in QML way. You may bind a binary expression, another promise, signal to the "resolveWhen" property. It may trigger the resolve() depend on its type and value.
+resolveWhen property is an alternative method to call resolve() in a QML way. You may bind a binary expression, another promise, signal to the "resolveWhen" property. That will trigger the resolve() depend on its type and value.
 
 **resolveWhen: binary expression**
 
@@ -172,17 +172,17 @@ It is equivalent to resolve(promise). It will adopt the state from the input pro
 
 Let x be the input promise.
 
-If x is fullfilled, call resolve().
+If x is fulfilled, call resolve().
 
 If x is rejected, call reject().
 
-If x is not settled, listen its state change. Once it is triggered, repeat the above steps.
+If x is not settled, listen its state change. Once it is fulfilled/rejected, repeat the above steps.
 
 **rejectWhen**
 
-_rejectWhen_ property is an alternative method to call reject() in QML way. You may bind a binary expression, signal to this property. It may trigger the reject() depend on its type and value.
+_rejectWhen_ property is an alternative method to call reject() in a QML way. You may bind a binary expression, signal to this property. It may trigger the reject() depend on its type and value.
 
-Remarks: _rejectWhen_ can not take promise as parameter
+Remarks: _rejectWhen_ can not take promise as parameter. 
 
 **rejectWhen: binary expression**
 
@@ -196,7 +196,7 @@ Listen the signal, once it is triggered, it will call reject().
 Q.promise()
 ===========
 
-Q.promise() is the creator function of Promise object in Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. But it don't support property binding (resolveWhen , rejectWhen) and signal (fulfilled, rejected , settled) like the Promise QML component.
+Q.promise() is the creator function of Promise object in a Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. But it don't support property binding (resolveWhen , rejectWhen) like the Promise QML component. 
 
 However, you may pass a signal object to resolve()/reject(). In this case, the promise will not change its state until the signal is triggered. If multiple signal call are made, the first signal call takes precedence, and any further calls are ignored.
 
@@ -216,7 +216,7 @@ Extra API
 
 **Q.setTimeout(func,milliseconds)**
 
-The setTimeout() method will wait the specified number of milliseconds, and then execute the specified function. If the milliseconds is equal to zero, the behaviour will be same as QueuedConnection.
+The setTimeout() method will wait the specified number of milliseconds, and then execute the specified function. If the milliseconds is equal to zero, the behaviour will be same as triggering a signal via QueuedConnection.
 
 
 **Q.all(promises)**
