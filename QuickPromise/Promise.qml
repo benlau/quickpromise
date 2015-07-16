@@ -2,7 +2,7 @@
 import QtQuick 2.0
 import QtQml 2.2
 import QuickPromise 1.0
-import "q.js" as Q
+import "promise.js" as PromiseJS
 import "combinator.js" as Combinator
 
 QtObject {
@@ -69,12 +69,12 @@ QtObject {
     }
 
     function _instanceOfSignal(object) {
-        return Q._instanceOfSignal(object);
+        return PromiseJS._instanceOfSignal(object);
     }
 
     function _init() {
         if (!_promise)
-            _promise = Q.promise();
+            _promise = PromiseJS.promise();
     }
 
     onResolveWhenChanged: {
@@ -83,7 +83,7 @@ QtObject {
         if (resolveWhen === true) {
             resolve(resolveWhen);
         } else if (instanceOfPromise(resolveWhen) ||
-                   Q.instanceOfPromise(resolveWhen) ||
+                   PromiseJS.instanceOfPromise(resolveWhen) ||
                    _instanceOfSignal(resolveWhen)) {
             resolve(resolveWhen);
         }

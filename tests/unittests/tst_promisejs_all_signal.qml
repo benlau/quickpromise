@@ -3,7 +3,7 @@ import QtTest 1.0
 import QuickPromise 1.0
 
 TestCase {
-    name : "Q_All_Signal"
+    name : "PromiseJS_All_Signal"
 
     function tick() {
         wait(0);

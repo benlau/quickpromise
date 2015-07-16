@@ -4,7 +4,7 @@
 .pragma library
 .import QuickPromise 1.0 as QP
 
-/* JavaScript implementation of promise
+/* JavaScript implementation of promise object
  */
 
 function Promise() {

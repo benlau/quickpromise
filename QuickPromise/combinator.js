@@ -1,9 +1,9 @@
 .pragma library
-.import "./q.js" as PromiseObject
+.import "./promise.js" as PromiseJS
 
 // Combinate a list of promises into a single promise object.
 function Combinator(promises,allSettled) {
-    this._combined = new PromiseObject.Promise();
+    this._combined = new PromiseJS.Promise();
     this._allSettled = allSettled === undefined ? false  : allSettled;
     this._promises = [];
     this._count = 0;
@@ -18,7 +18,7 @@ function Combinator(promises,allSettled) {
 }
 
 Combinator.prototype.add = function(promises) {
-    if (PromiseObject.instanceOfPromise(promises)) {
+    if (PromiseJS.instanceOfPromise(promises)) {
         this._addPromise(promises);
     } else {
         this._addPromises(promises);
@@ -33,8 +33,8 @@ Combinator.prototype._addPromises = function(promises) {
 }
 
 Combinator.prototype._addPromise = function(promise) {
-    if (PromiseObject._instanceOfSignal(promise)) {
-        var delegate = new PromiseObject.Promise();
+    if (PromiseJS._instanceOfSignal(promise)) {
+        var delegate = new PromiseJS.Promise();
         delegate.resolve(promise);
         this._addCheckedPromise(delegate);
     } else if (promise.settled) {
