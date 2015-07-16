@@ -19,19 +19,25 @@ function Promise() {
 
     this.___promiseSignature___ = true;
 
-    this.settled = false;
-    this.accepted = false;
-    this.rejected = false;
+    this.isSettled = false;
+    this.isFulfilled = false;
+    this.isRejected = false;
+}
+
+function instanceOfPromiseJS(object) {    
+    return typeof object === "object" &&
+           typeof object.hasOwnProperty === "function" &&
+            object.hasOwnProperty("___promiseSignature___");
+}
+
+function instanceOfPromiseItem(object) {
+    return typeof object === "object" &&
+           typeof object.hasOwnProperty === "function" &&
+            object.hasOwnProperty("___promiseQmlSignature71237___");
 }
 
 function instanceOfPromise(object) {
-    if (typeof object !== "object")
-        return false;
-    
-    if (typeof object.hasOwnProperty !== "function")
-        return false;
-
-    return object.hasOwnProperty("___promiseSignature___");
+    return instanceOfPromiseJS(object) || instanceOfPromiseItem(object)
 }
 
 function _instanceOfSignal(object) {
@@ -228,13 +234,13 @@ Promise.prototype._emit = function(arr,value) {
 
 Promise.prototype._setState = function(state) {
     if (state === "fulfilled") {
-        this.fulfilled = true;
-        this.settled = true;
+        this.isFulfilled = true;
+        this.isSettled = true;
         this._onFullfilled = [];
         this._onRejected = [];
     } else if (state === "rejected"){
-        this.rejected = true;
-        this.settled = true;
+        this.isRejected = true;
+        this.isSettled = true;
         this._onFullfilled = [];
         this._onRejected = [];
     }

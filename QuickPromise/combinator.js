@@ -37,8 +37,8 @@ Combinator.prototype._addPromise = function(promise) {
         var delegate = new PromiseJS.Promise();
         delegate.resolve(promise);
         this._addCheckedPromise(delegate);
-    } else if (promise.settled) {
-        if (promise.rejected) {
+    } else if (promise.isSettled) {
+        if (promise.isRejected) {
             this._reject(promise._result);
         }
     } else {
