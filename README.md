@@ -228,6 +228,20 @@ Given an array of promises , it will create a promise object that will be fulfil
 
 Given an array of promises , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected. It won't change the state until all the input promises are settled. 
 
+Advanced Usage
+==============
+
+1. Resolve by multiple signals.
+-------------------------------
+
+
+```
+
+Promise {
+    resolveWhen: Q.all([timer.triggered, loader.loaded]);
+}
+
+```
 
 
 
