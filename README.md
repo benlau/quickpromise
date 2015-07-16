@@ -243,5 +243,18 @@ Promise {
 
 ```
 
+2. Resolve by signal and binary expression
+------------------------------------------
 
+```
+Promise {
+    resolveWhen: Q.all([timer.triggered, promise2]);
+
+    Promise {
+        id : promise2
+        resolveWhen: image.status === Image.Ready
+    }
+}
+
+```
 
