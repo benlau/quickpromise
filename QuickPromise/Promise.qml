@@ -44,6 +44,7 @@ QtObject {
 
     function resolve(value) {
         if (instanceOfPromise(value)) {
+            value._init();
             value = value._promise;
         }
 
@@ -83,7 +84,7 @@ QtObject {
         if (resolveWhen === true) {
             resolve(resolveWhen);
         } else if (instanceOfPromise(resolveWhen) ||
-                   PromiseJS.instanceOfPromise(resolveWhen) ||
+                   PromiseJS.instanceOfPromiseJS(resolveWhen) ||
                    _instanceOfSignal(resolveWhen)) {
             resolve(resolveWhen);
         }

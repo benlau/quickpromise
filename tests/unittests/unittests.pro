@@ -19,4 +19,6 @@ DISTFILES += \
     tst_promise_rejectwhen_signal.qml \
     tst_aplus_spec.qml \
     tst_promisejs_all_signal.qml \
-    tst_promisejs_all_promise_item.qml
+    tst_promisejs_all_promise_item.qml \
+    tst_promise_resolvewhen_promise.qml \
+    TestSuite.qml
