@@ -4,5 +4,6 @@
         <file>QuickPromise/Promise.qml</file>
         <file>QuickPromise/q.js</file>
         <file>QuickPromise/Q.qml</file>
+        <file>QuickPromise/combinator.js</file>
     </qresource>
 </RCC>

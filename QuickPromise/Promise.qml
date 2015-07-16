@@ -3,6 +3,7 @@ import QtQuick 2.0
 import QtQml 2.2
 import QuickPromise 1.0
 import "q.js" as Q
+import "combinator.js" as Combinator
 
 QtObject {
     id : promise
@@ -55,12 +56,12 @@ QtObject {
 
     /// Combine multiple promises into a single promise.
     function all(promises) {
-        return Q.all(promises);
+        return Combinator.all(promises);
     }
 
     /// Combine multiple promises into a single promise. It will wait for all of the promises to either be fulfilled or rejected.
     function allSettled(promises) {
-        return Q.allSettled(promises);
+        return Combinator.allSettled(promises);
     }
 
     function instanceOfPromise(object) {
