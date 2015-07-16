@@ -14,7 +14,8 @@ include(../../quickpromise.pri)
 DEFINES += SRCDIR=\\\"$$PWD/\\\" BASEDIR=\\\"$$PWD/..\\\"
 
 DISTFILES += \
-    tst_q.qml \
     tst_promise_resolve_signal.qml \
     tst_promise_resolvewhen_signal.qml \
-    tst_promise_rejectwhen_signal.qml
+    tst_promise_rejectwhen_signal.qml \
+    tst_aplus_spec.qml \
+    tst_q_all_signal.qml

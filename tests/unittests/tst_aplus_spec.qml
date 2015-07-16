@@ -4,7 +4,7 @@ import QuickPromise 1.0
 
 
 TestCase {
-    name : "Q"
+    name : "APlusSpec"
 
     function tick() {
         wait(0);

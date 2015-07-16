@@ -273,13 +273,22 @@ Combinator.prototype._addPromises = function(promises) {
 }
 
 Combinator.prototype._addPromise = function(promise) {
-    var combinator = this;
-
-    if (promise.settled) {
+    if (_instanceOfSignal(promise)) {
+        var delegate = new Promise();
+        delegate.resolve(promise);
+        this._addCheckedPromise(delegate);
+    } else if (promise.settled) {
         if (promise.rejected) {
-            combinator._reject(promise._result);
+            this._reject(promise._result);
         }
     } else {
+        this._addCheckedPromise(promise);
+    }
+}
+
+Combinator.prototype._addCheckedPromise = function(promise) {
+    var combinator = this;
+
         this._promises.push(promise);
         this._count++;
         promise.then(function(value) {
@@ -289,7 +298,6 @@ Combinator.prototype._addPromise = function(promise) {
             combinator._count--;
             combinator._reject(reason);
         });
-    }
 }
 
 Combinator.prototype._reject = function(reason) {
