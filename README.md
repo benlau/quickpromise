@@ -221,12 +221,12 @@ The setTimeout() method will wait the specified number of milliseconds, and then
 
 **Q.all(promises)**
 
-Given an array of promises , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected.
+Given an array of promise / signal , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected.
 
 
 **Q.allSettled(promises)**
 
-Given an array of promises , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected. It won't change the state until all the input promises are settled. 
+Given an array of promise / signal , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected. It won't change the state until all the input promises are settled. 
 
 Advanced Usage
 ==============
