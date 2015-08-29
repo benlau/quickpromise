@@ -198,9 +198,9 @@ Q.promise()
 
 Q.promise() is the creator function of Promise object in a Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. But it don't support property binding (resolveWhen , rejectWhen) like the Promise QML component. 
 
-However, you may pass a signal object to resolve()/reject(). In this case, the promise will not change its state until the signal is triggered. If multiple signal call are made, the first signal call takes precedence, and any further calls are ignored.
+However, you may still pass a signal object to resolve()/reject(). In this case, the promise will not change its state until the signal is triggered. If multiple signal call are made, the first signal call takes precedence, and any further calls are ignored.
 
-Remarks: Don't pass the result of Qt.binding() to resolve(). It is meaningless and will throw exception.
+But it don't support to resolve by the result of Qt.binding(). It will just throw exception. In this case, you should use a QML Promise and pass it to resolveWhen property.
 
 *API*
 

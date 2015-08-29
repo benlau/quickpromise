@@ -108,7 +108,7 @@ Promise.prototype.resolve = function(value) {
             value = newPromise;
         } catch (e) {
             console.error(e);
-            throw new Error("promise.resolve(object): Failed to call object.connect(). Are you passing the result of Qt.binding() to resolve()?");
+            throw new Error("promise.resolve(object): Failed to call object.connect(). Are you passing the result of Qt.binding()? Please use QML Promise and pass it to resolveWhen property.");
         }
     }
     
