@@ -100,12 +100,16 @@ Promise.prototype.resolve = function(value) {
     var promise = this;
 
     if (value && _instanceOfSignal(value)) {
-        // resolve(signal)
-        var newPromise = new Promise();
-        value.connect(function() {
-            newPromise.resolve();
-        });
-        value = newPromise;
+        try {
+            var newPromise = new Promise();
+            value.connect(function() {
+                newPromise.resolve();
+            });
+            value = newPromise;
+        } catch (e) {
+            console.error(e);
+            throw new Error("promise.resolve(object): Failed to call object.connect(). Are you passing the result of Qt.binding() to resolve()?");
+        }
     }
     
     if (value &&

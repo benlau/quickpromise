@@ -6,7 +6,7 @@ Quick Promise - QML Promise Library
 ===================================
 [![Build Status](https://travis-ci.org/benlau/quickpromise.svg?branch=master)](https://travis-ci.org/benlau/quickpromise)
 
-The Promise object is widely used for deferred and asynchronous computation in Javascript Application. "Quick Promise” is a library that provides Promise object in QML way. It comes with a Promise component with signal and property. It could be resolved via a binary expression,  another promise object, then trigger your callback by QueuedConnection.
+The Promise object is widely used for deferred and asynchronous computation in Javascript Application. "Quick Promise” is a library that provides Promise object in a QML way. It comes with a Promise component with signal and property. It could be resolved via a binary expression,  another promise object, then trigger your callback by QueuedConnection.
 
 Moreover, it also provides Promise as a Javascript object that don’t need to declare in QML way. The API is fully compliant with  [Promises/A+](https://promisesaplus.com/) specification with all the test cases passed and therefore it just works like many other Promise solutions for Javascript application.
 
@@ -199,6 +199,8 @@ Q.promise()
 Q.promise() is the creator function of Promise object in a Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. But it don't support property binding (resolveWhen , rejectWhen) like the Promise QML component. 
 
 However, you may pass a signal object to resolve()/reject(). In this case, the promise will not change its state until the signal is triggered. If multiple signal call are made, the first signal call takes precedence, and any further calls are ignored.
+
+Remarks: Don't pass the result of Qt.binding() to resolve(). It is meaningless and will throw exception.
 
 *API*
 
