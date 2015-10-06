@@ -1,0 +1,20 @@
+{
+  "name": "com.github.benlau.quickpromise",
+  "description": "Promise library for QML",
+  "author": {
+    "name": "Ben Lau",
+    "email": "xbenlau@gmail.com"
+  },
+  "repository": {
+    "type": "GITHUB",
+    "url": "git@github.com:benlau/quickpromise.git"
+  },
+  "version": {
+    "label": "0.0.1",
+    "revision": "",
+    "fingerprint": ""
+  },
+ "license": "MIT",
+  "pri_filename": "quickpromise.pri",
+  "webpage": "https://github.com/benlau/quickpromise"
+}
