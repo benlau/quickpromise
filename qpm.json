@@ -10,10 +10,12 @@
     "url": "git@github.com:benlau/quickpromise.git"
   },
   "version": {
-    "label": "0.0.1",
+    "label": "0.0.2",
     "revision": "",
     "fingerprint": ""
   },
+  "dependencies": [
+  ],
  "license": "MIT",
   "pri_filename": "quickpromise.pri",
   "webpage": "https://github.com/benlau/quickpromise"
