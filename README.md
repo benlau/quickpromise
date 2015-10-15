@@ -25,19 +25,19 @@ Item {
         asynchronous: true
         source : "https://lh3.googleusercontent.com/_yimBU8uLUTqQQ9gl5vODqDufdZ_cJEiKnx6O6uNkX6K9lT63MReAWiEonkAVatiPxvWQu7GDs8=s640-h400-e365-rw";
     }
-    
+
     Timer {
         id: timer
-        interval: 3000    
+        interval: 3000
     }
 
     Promise {
         // Resolve when the image is ready
         resolveWhen: image.status === Image.Ready
-        
+
         // Reject when time out.
         rejectWhen: timer.triggered
-        
+
         onFulfilled:  {
             // If the timer is reached, the image will not be shown even it is ready.
             item.opacity = 1;
@@ -78,7 +78,7 @@ Installation Instruction
 
  3) Add "qrc://" to your QML import path
 
-``` 
+```
 engine.addImportPath("qrc:///"); // QQmlEngine
 ```
 
@@ -99,12 +99,12 @@ Promise QML Componnet
 ```
 Promise {
     property bool isFulfilled
-    
+
     property bool isRejected
-    
+
     property bool isSettled : isFulfilled || isRejected
 
-    /// An expression that will trigger resolve() if the value become true or another promise object got resolved. 
+    /// An expression that will trigger resolve() if the value become true or another promise object got resolved.
     property var resolveWhen
 
     /// An expression that will trigger reject() if the value become true. Don't assign another promise object here.
@@ -117,13 +117,13 @@ Promise {
     signal settled(var value)
 
     function setTimeout(func,timeout) { ... }
-    
+
     function then(onFulfilled,onRejected) { ... }
 
     function resolve(value) { ... }
-    
+
     function reject(reason) { ... }
-    
+
     function all(promises) { ... }
 
     function allSettled(promises) { ... }
@@ -137,7 +137,7 @@ It is true if resolve() has been called on that promise object
 It is true if reject() has been called on that promise object
 
 **isSettled**
-It is true if either of isFullfilled or isRejected has been set. 
+It is true if either of isFullfilled or isRejected has been set.
 
 
 **resolveWhen**
@@ -182,7 +182,7 @@ If x is not settled, listen its state change. Once it is fulfilled/rejected, rep
 
 _rejectWhen_ property is an alternative method to call reject() in a QML way. You may bind a binary expression, signal to this property. It may trigger the reject() depend on its type and value.
 
-Remarks: _rejectWhen_ can not take promise as parameter. 
+Remarks: _rejectWhen_ can not take promise as parameter.
 
 **rejectWhen: binary expression**
 
@@ -196,7 +196,7 @@ Listen the signal, once it is triggered, it will call reject().
 Q.promise()
 ===========
 
-Q.promise() is the creator function of Promise object in a Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. But it don't support property binding (resolveWhen , rejectWhen) like the Promise QML component. 
+Q.promise() is the creator function of Promise object in a Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. But it don't support property binding (resolveWhen , rejectWhen) like the Promise QML component.
 
 However, you may still pass a signal object to resolve()/reject(). In this case, the promise will not change its state until the signal is triggered. If multiple signal call are made, the first signal call takes precedence, and any further calls are ignored.
 
@@ -228,7 +228,7 @@ Given an array of promise / signal , it will create a promise object that will b
 
 **Q.allSettled(promises)**
 
-Given an array of promise / signal , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected. It won't change the state until all the input promises are settled. 
+Given an array of promise / signal , it will create a promise object that will be fulfilled once all the input promises are fulfilled. And it will be rejected if any one of the input promises is rejected. It won't change the state until all the input promises are settled.
 
 Advanced Usage
 ==============
