@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var fileData = fs.readFileSync('../../QuickPromise/promise.js',                               
+var fileData = fs.readFileSync('../../QuickPromise/promise.js',
                                'utf8');
 
 var res = fileData.replace(/.pragma library/i,"")
@@ -15,8 +15,8 @@ var adapter = {
         return {
             promise: p,
             resolve: function(x) {p.resolve(x)},
-            reject: function(x) {p.reject(x)}            
-        }        
+            reject: function(x) {p.reject(x)}
+        }
     },
     rejected: function(reason) {
         var p = promise();

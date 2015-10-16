@@ -24,7 +24,7 @@ function Promise() {
     this.isRejected = false;
 }
 
-function instanceOfPromiseJS(object) {    
+function instanceOfPromiseJS(object) {
     return typeof object === "object" &&
            typeof object.hasOwnProperty === "function" &&
             object.hasOwnProperty("___promiseSignature___");
@@ -111,7 +111,7 @@ Promise.prototype.resolve = function(value) {
             throw new Error("promise.resolve(object): Failed to call object.connect(). Are you passing the result of Qt.binding()? Please use QML Promise and pass it to resolveWhen property.");
         }
     }
-    
+
     if (value &&
         instanceOfPromise(value)) {
 
@@ -142,7 +142,7 @@ Promise.prototype.resolve = function(value) {
             promise.reject(e);
             return;
         }
-        
+
         if (typeof then === "function") {
             try {
                 var called = false;
@@ -156,17 +156,17 @@ Promise.prototype.resolve = function(value) {
                         return;
 
                     called = true;
-                    promise.reject(y);                
-                });  
+                    promise.reject(y);
+                });
             } catch (e) {
                 console.error(e);
                 console.trace();
                 if (!called) {
-                    promise.reject(e);    
+                    promise.reject(e);
                 }
             }
             return;
-        }        
+        }
     }
 
     this._resolveInTick(value);
