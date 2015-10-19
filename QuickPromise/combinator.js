@@ -42,7 +42,7 @@ Combinator.prototype._addPromise = function(promise) {
         if (promise.isRejected) {
             this._reject(promise._result);
         }
-        // calling `resolve` after adding resolved promises is covered 
+        // calling `resolve` after adding resolved promises is covered
         // by the call to `_settle` in constructor
     } else {
         this._addCheckedPromise(promise);
