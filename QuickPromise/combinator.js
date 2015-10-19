@@ -6,11 +6,12 @@ function Combinator(promises,allSettled) {
     this._combined = new PromiseJS.Promise();
     this._allSettled = allSettled === undefined ? false  : allSettled;
     this._promises = [];
+    this._results = [];
     this._count = 0;
 
     // Any promise rejected?
     this._rejected = false;
-    this._rejectReason  = undefined;
+    this._rejectReason = undefined;
 
     this.add(promises);
 
@@ -41,6 +42,8 @@ Combinator.prototype._addPromise = function(promise) {
         if (promise.isRejected) {
             this._reject(promise._result);
         }
+        // calling `resolve` after adding resolved promises is covered 
+        // by the call to `_settle` in constructor
     } else {
         this._addCheckedPromise(promise);
     }
@@ -49,15 +52,19 @@ Combinator.prototype._addPromise = function(promise) {
 Combinator.prototype._addCheckedPromise = function(promise) {
     var combinator = this;
 
-        this._promises.push(promise);
-        this._count++;
-        promise.then(function(value) {
-            combinator._count--;
-            combinator._settle(value);
-        },function(reason) {
-            combinator._count--;
-            combinator._reject(reason);
-        });
+    var promiseIndex = this._promises.length;
+    combinator._promises.push(promise);
+    combinator._results.push(undefined);
+    combinator._count++;
+
+    promise.then(function(value) {
+        combinator._count--;
+        combinator._results[promiseIndex] = value;
+        combinator._settle();
+    },function(reason) {
+        combinator._count--;
+        combinator._reject(reason);
+    });
 }
 
 Combinator.prototype._reject = function(reason) {
@@ -70,7 +77,7 @@ Combinator.prototype._reject = function(reason) {
 }
 
 /// Check it match the settle condition, it will call resolve / reject on the combined promise.
-Combinator.prototype._settle = function(value) {
+Combinator.prototype._settle = function() {
     if (this._count !== 0) {
         return;
     }
@@ -78,7 +85,7 @@ Combinator.prototype._settle = function(value) {
     if (this._rejected) {
         this._combined.reject(this._rejectedReason);
     } else {
-        this._combined.resolve(value);
+        this._combined.resolve(this._results);
     }
 }
 

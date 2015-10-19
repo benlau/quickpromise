@@ -178,16 +178,17 @@ TestCase {
 
         var allPromise = Q.all([promise1,promise2,promise3]);
         compare(allPromise.state ,"pending");
-        promise1.resolve("a");
+        promise2.resolve("b"); // resolve out of order
         tick();
         compare(allPromise.state ,"pending");
-        promise2.resolve("b");
+        promise1.resolve("a");
         tick();
         compare(allPromise.state ,"pending");
         promise3.resolve("c");
         tick();
         compare(allPromise.state ,"fulfilled");
-        compare(allPromise._result,"c");
+        // results should keep original order regardless of resolution order
+        compare(allPromise._result, ["a", "b", "c"]);
 
         // Condition 2. Reject one of the promise
         promise1 = Q.promise();
@@ -218,13 +219,14 @@ TestCase {
         promise2 = Q.promise();
         promise3 = Q.promise();
 
-        promise1.resolve();
-        promise2.resolve();
-        promise3.resolve();
+        promise2.resolve('y');
+        promise1.resolve('x');
+        promise3.resolve('z');
 
         allPromise = Q.all([promise1,promise2,promise3]);
         tick();
         compare(allPromise.state ,"fulfilled");
+        compare(allPromise._result, ["x", "y", "z"]);
     }
 
     function test_q_allSettled() {
@@ -235,16 +237,17 @@ TestCase {
 
         var allPromise = Q.allSettled([promise1,promise2,promise3]);
         compare(allPromise.state ,"pending");
+        promise3.resolve("c"); // resolve out of order
+        tick();
+        compare(allPromise.state ,"pending");
         promise1.resolve("a");
         tick();
         compare(allPromise.state ,"pending");
         promise2.resolve("b");
         tick();
-        compare(allPromise.state ,"pending");
-        promise3.resolve("c");
-        tick();
         compare(allPromise.state ,"fulfilled");
-        compare(allPromise._result,"c");
+        // results should keep original order regardless of resolution order
+        compare(allPromise._result, ["a", "b", "c"]);
 
         // Condition 2. Reject one of the promise
         promise1 = Q.promise();
@@ -286,13 +289,14 @@ TestCase {
         promise2 = Q.promise();
         promise3 = Q.promise();
 
-        promise1.resolve();
-        promise2.resolve();
-        promise3.resolve();
+        promise2.resolve('y');
+        promise1.resolve('x');
+        promise3.resolve('z');
 
         allPromise = Q.allSettled([promise1,promise2,promise3]);
         tick();
         compare(allPromise.state ,"fulfilled");
+        compare(allPromise._result, ["x", "y", "z"]);
     }
 
     Component {
