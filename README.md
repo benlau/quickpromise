@@ -68,12 +68,39 @@ Feature List
  1. Q.setTimeout() - An implementation of setTimeout() function for QML.
  2. all()/allSettled()  - Create a promise object from an array of promises
 
+Installation Instruction (qpm)
+==============================
+
+ 1) Run `qpm install`
+
+```
+$ qpm install com.github.benlau.quickpromise
+```
+
+ 2) Include vendor/vendor.pri in your .pro file
+
+You may skip this step if you are already using qpm.
+
+```
+include(vendor/vendor.pri)
+```
+
+ 3) Add "qrc://" to your QML import path
+
+```
+engine.addImportPath("qrc:///"); // QQmlEngine
+```
+
+ 4) Add import statement in your QML file
+
+```
+import QuickPromise 1.0
+```
+
 Installation Instruction
 ========================
 
  1) Clone this repository or download release to a folder within your source tree.
-
-(You may use `git submodule` to embed this repository)
 
  2) Add this line to your profile file(.pro):
 
