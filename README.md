@@ -47,7 +47,10 @@ Item {
 
 ```
 
-The code above demonstrated how Promise component could be used in asynchronous workflow for QML application. The resolveWhen property accepts a boolean expression, another Promise object and signal. Once the result of expression becomes truth, it will trigger the “onFulfilled” slot via queued Connection. *The slot will be executed for once only*.
+The code above demonstrated how Promise component could be used in asynchronous workflow for QML application.
+The resolveWhen property accepts a boolean expression, another Promise object and signal. 
+Once the result of expression becomes truth, 
+it will trigger the “onFulfilled” slot via QueuedConnection. *The slot will be executed for once only*.
 
 Remarks: The QML Promise component is not fully compliant with Promises/A+ specification.
 
