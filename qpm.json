@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "GITHUB",
-    "url": "git@github.com:benlau/quickpromise.git"
+    "url": "https://github.com/benlau/quickpromise.git"
   },
   "version": {
     "label": "1.0.3",
