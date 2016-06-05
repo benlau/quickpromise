@@ -37,7 +37,13 @@ void QPTimer::onTriggered()
 
     QJSValue func = timer->property("__quick_promise_func___").value<QJSValue>();
 
-    func.call();
+    QJSValue res = func.call();
+
+    if (res.isError()) {
+        qDebug() << "Q.setTimeout() - Uncaught exception at line"
+                 << res.property("lineNumber").toInt()
+                 << ":" << res.toString();
+    }
 
     timer->deleteLater();
 }

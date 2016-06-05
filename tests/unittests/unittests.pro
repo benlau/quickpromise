@@ -24,4 +24,5 @@ DISTFILES += \
     TestSuite.qml \
     tst_promise_resolvewhen_all_signal.qml \
     tst_promise_resolvewhen_all_promise.qml \
-    tst_promisejs_resolve_qt_binding.qml
+    tst_promisejs_resolve_qt_binding.qml \
+    tst_timer.qml
