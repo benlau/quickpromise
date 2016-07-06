@@ -54,6 +54,9 @@ it will trigger the “onFulfilled” slot via QueuedConnection. *The slot will 
 
 Remarks: The QML Promise component is not fully compliant with Promises/A+ specification.
 
+Related artciles:
+1. [JavaScript Promises with ArcGIS Runtime SDK for Qt | GeoNet](https://geonet.esri.com/community/developers/native-app-developers/arcgis-runtime-sdk-for-qt/blog/2016/07/05/javascript-promises-with-arcgis-runtime-sdk-for-qt)
+
 Feature List
 ------------
 
