@@ -1,4 +1,5 @@
 QT += qml
+CONFIG += c++11
 
 QML_IMPORT_PATH += $$PWD
 
