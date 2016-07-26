@@ -23,7 +23,10 @@ public:
     bool isFulfilled();
     bool isRejected();
     bool isSettled();
-    /// Returns true if the javascript promise was already destroyed; false otherwise
+    /// Returns true if the javascript promise was already garbage collected; false otherwise
+    /// @note This call is probably not terribly useful, as promise deletion depends on the vagaries of javascript
+    /// garbage collection, but it's provided as it's unambiguously determined and may provide useful insight into the
+    /// behavior of an app
     bool wasForgotten() { return internalPromise == nullptr; }
 
     operator QJSValue();

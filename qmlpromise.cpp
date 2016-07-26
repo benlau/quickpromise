@@ -9,9 +9,13 @@ QmlPromise::QmlPromise(QObject* parent)
     QQmlComponent promiserComponent(qmlEngine(parent));
     promiserComponent.setData("import QuickPromise 1.0\nPromise {}", QUrl());
     internalPromise = promiserComponent.create();
-    QQmlEngine::setObjectOwnership(internalPromise, QQmlEngine::JavaScriptOwnership);
 
-    connect(internalPromise, &QObject::destroyed, this, [this] { qDebug() << "Forgotten"; internalPromise = nullptr; });
+    QQmlEngine::setObjectOwnership(internalPromise, QQmlEngine::JavaScriptOwnership);
+    connect(internalPromise, &QObject::destroyed, this, [this] {
+        // Probably won't happen often, if ever, but if it does it could provide useful insights vis a vis debugging
+        qDebug() << "Promise{} was garbage collected while QmlPromise still valid";
+        internalPromise = nullptr;
+    });
     connect(internalPromise, SIGNAL(fulfilled(QVariant)), this, SIGNAL(fulfilled(QVariant)));
     connect(internalPromise, SIGNAL(rejected(QVariant)), this, SIGNAL(rejected(QVariant)));
     connect(internalPromise, SIGNAL(settled(QVariant)), this, SIGNAL(settled()));
