@@ -6,6 +6,10 @@
 
 QmlPromise::QmlPromise(QObject* parent)
     : QObject(parent) {
+    auto engine = qmlEngine(parent);
+    if (engine == nullptr)
+        qFatal("Could not find QML engine. Unable to continue.");
+
     QQmlComponent promiserComponent(qmlEngine(parent));
     promiserComponent.setData("import QuickPromise 1.0\nPromise {}", QUrl());
     internalPromise = promiserComponent.create();
