@@ -2,6 +2,7 @@
 
 #include <QQmlComponent>
 #include <QQmlEngine>
+#include <QDebug>
 
 QmlPromise::QmlPromise(QObject* parent)
     : QObject(parent) {
@@ -31,6 +32,22 @@ bool QmlPromise::isRejected() {
 
 bool QmlPromise::isSettled() {
     return internalPromise? internalPromise->property("isSettled").toBool() : wasFulfilled || wasRejected;
+}
+
+bool QmlPromise::hasRejectHandler() {
+    if (wasForgotten())
+        return false;
+
+    auto engine = qmlEngine(internalPromise);
+    auto rejectHandlers = engine->toScriptValue(internalPromise->property("_promise")).property("_onRejected");
+    if (!rejectHandlers.isArray())
+        return false;
+
+    auto handlerCount = rejectHandlers.property("length").toInt();
+    for (int i = 0; i < handlerCount; ++i)
+        if (rejectHandlers.property(QString::number(i)).toBool())
+            return true;
+    return false;
 }
 
 QmlPromise::operator QJSValue() {

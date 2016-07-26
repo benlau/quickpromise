@@ -25,6 +25,8 @@ public:
     bool isSettled();
     /// Returns true if the javascript promise was already destroyed; false otherwise
     bool wasForgotten() { return internalPromise; }
+    /// Returns true if the javascript promise has any reject handlers; false otherwise
+    bool hasRejectHandler();
 
     operator QJSValue();
 
