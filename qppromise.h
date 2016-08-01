@@ -5,29 +5,27 @@
 #include <QVariant>
 
 class QJSValue;
+class QQmlEngine;
 
-class QmlPromise : public QObject
-{
+class QPPromise : public QObject {
     Q_OBJECT
     Q_PROPERTY(bool isFulfilled READ isFulfilled NOTIFY settled)
     Q_PROPERTY(bool isRejected READ isRejected NOTIFY settled)
     Q_PROPERTY(bool isSettled READ isSettled NOTIFY settled)
+
+protected:
     QObject* internalPromise;
-    bool wasFulfilled = false;
-    bool wasRejected = false;
+    static QQmlEngine* engine;
 
 public:
-    QmlPromise(QObject* parent);
-    virtual ~QmlPromise();
+    QPPromise(QObject* parent);
+    virtual ~QPPromise();
+
+    static void setEngine(QQmlEngine* engine) { if (engine) QPPromise::engine = engine; }
 
     bool isFulfilled();
     bool isRejected();
     bool isSettled();
-    /// Returns true if the javascript promise was already garbage collected; false otherwise
-    /// @note This call is probably not terribly useful, as promise deletion depends on the vagaries of javascript
-    /// garbage collection, but it's provided as it's unambiguously determined and may provide useful insight into the
-    /// behavior of an app
-    bool wasForgotten() { return internalPromise == nullptr; }
 
     operator QJSValue();
 
@@ -38,7 +36,7 @@ public slots:
 signals:
     void fulfilled(QVariant);
     void rejected(QVariant);
-    void settled();
+    void settled(QVariant);
 };
 
 #endif // PROMISE_HPP

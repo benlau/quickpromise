@@ -31,18 +31,18 @@ void QmlPromiseTester::runTest(QString testName) {
 QmlPromiseTester::QmlPromiseTester(QObject *parent) : QObject(parent), app(argc, (char**)argv) {
     connect(&engine, &QQmlApplicationEngine::quit, &app, &QApplication::quit);
     qmlRegisterType<QmlPromiseTester>("tests", 1, 0, "Tester");
-    qmlRegisterUncreatableType<QmlPromise>("QuickPromise", 1, 0, "QmlPromise", "");
+    qmlRegisterUncreatableType<QPPromise>("QuickPromise", 1, 0, "QmlPromise", "");
     engine.addImportPath("qrc:/");
     engine.rootContext()->setContextProperty("tester", this);
     engine.load(QUrl("qrc:/tests.qml"));
 }
 
-QmlPromise* QmlPromiseTester::makePromise() {
-    auto promise = new QmlPromise(engine.rootObjects().first());
+QPPromise* QmlPromiseTester::makePromise() {
+    auto promise = new QPPromise(engine.rootObjects().first());
     return promise;
 }
 
-QJSValue QmlPromiseTester::getScriptPromise(QmlPromise* promise) {
+QJSValue QmlPromiseTester::getScriptPromise(QPPromise* promise) {
     return *promise;
 }
 
