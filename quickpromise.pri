@@ -10,11 +10,11 @@ RESOURCES += \
 
 HEADERS += \
     $$PWD/qptimer.h \
-    $$PWD/qmlpromise.h
+    $$PWD/qppromise.h
 
 SOURCES += \
     $$PWD/qptimer.cpp \
-    $$PWD/qmlpromise.cpp
+    $$PWD/qppromise.cpp
 
 DISTFILES += \
     $$PWD/README.md

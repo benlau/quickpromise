@@ -3,7 +3,7 @@
 #ifndef QMLPROMISETESTER_HPP
 #define QMLPROMISETESTER_HPP
 
-#include <qmlpromise.h>
+#include <qppromise.h>
 
 #include <QQmlApplicationEngine>
 #include <QtTest/QtTest>
@@ -28,8 +28,8 @@ public:
         _Exit(0);
     }
 
-    Q_INVOKABLE QmlPromise* makePromise();
-    Q_INVOKABLE QJSValue getScriptPromise(QmlPromise* promise);
+    Q_INVOKABLE QPPromise* makePromise();
+    Q_INVOKABLE QJSValue getScriptPromise(QPPromise* promise);
 
 private slots:
     void basicResolve() { runTest(__FUNCTION__); }
@@ -38,7 +38,6 @@ private slots:
     void rejectWithArgument() { runTest(__FUNCTION__); }
     void twoResolversWithArgs() { runTest(__FUNCTION__); }
     void twoRejectersWithArg() { runTest(__FUNCTION__); }
-    void wasForgotten() { runTest(__FUNCTION__); }
 };
 
 #endif // QMLPROMISETESTER_HPP
