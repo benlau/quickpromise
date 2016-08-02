@@ -1,6 +1,7 @@
 // Author:  Nathan Hourt (https://github.com/nathanhourt/)
 
 import QtQuick 2.0
+import QuickPromise 1.0
 
 /*
  * Funky test framework that I hacked together out of Qt Test. The infrastructure should take care of all the details;
@@ -24,45 +25,45 @@ Item {
     function checkUnsettled(promise) {
         if (promise.isFulfilled) {
             console.log("Spuriously fulfilled promise.")
-            return false
+            throw false
         }
         if (promise.isRejected) {
             console.log("Spuriously rejected promise.")
-            return false
+            throw false
         }
         if (promise.isSettled) {
             console.log("Spuriously settled promise.")
-            return false
+            throw false
         }
         return true
     }
     function checkFulfilled(promise) {
         if (!promise.isFulfilled) {
             console.log("Spuriously unfulfilled promise.")
-            return false
+            throw false
         }
         if (promise.isRejected) {
             console.log("Spuriously rejected promise.")
-            return false
+            throw false
         }
         if (!promise.isSettled) {
             console.log("Spuriously unsettled promise.")
-            return false
+            throw false
         }
         return true
     }
     function checkRejected(promise) {
         if (promise.isFulfilled) {
             console.log("Spuriously fulfilled promise.")
-            return false
+            throw false
         }
         if (!promise.isRejected) {
             console.log("Spuriously unrejected promise.")
-            return false
+            throw false
         }
         if (!promise.isSettled) {
             console.log("Spuriously unsettled promise.")
-            return false
+            throw false
         }
         return true
     }
@@ -203,5 +204,58 @@ Item {
     function twoRejectersWithArg2() {
         checkRejected(testProperties.promise)
         return testProperties.resolved1 && testProperties.resolved2
+    }
+
+    function nestedPromise1() {
+        testProperties.resolved = false
+        var promise = tester.makePromise()
+        testProperties.finalPromise = tester.getScriptPromise(promise).then(function(args) {
+            if (args[0] !== "blue" || args[1] !== 1 || args[2] !== false) {
+                console.log("Arguments wrong", args)
+                return
+            }
+            var nestedPromise = Q.promise()
+            testProperties.nestedPromise = nestedPromise
+            return nestedPromise.then(function(text) {
+                return args[0] + text
+            })
+        }).then(function(text) {
+            if (text === "bluejay")
+                testProperties.resolved = true
+            else {
+                console.log("Unexpected result", text)
+            }
+        })
+        checkUnsettled(promise)
+        checkUnsettled(testProperties.finalPromise)
+        promise.resolve(["blue", 1, false])
+        testProperties.promise = promise
+        return true;
+    }
+    function nestedPromise2() {
+        checkFulfilled(testProperties.promise)
+        checkUnsettled(testProperties.nestedPromise)
+        checkUnsettled(testProperties.finalPromise)
+        if (testProperties.resolved) {
+            console.log("Unexpected resolved === true")
+            return false
+        }
+        testProperties.nestedPromise.resolve("jay")
+        return true
+    }
+    function nestedPromise3() {
+        checkFulfilled(testProperties.promise)
+        checkFulfilled(testProperties.nestedPromise)
+        return true
+    }
+    function nestedPromise4() {
+        if (!testProperties.resolved) {
+            console.log("Never resolved the nestedPromise")
+            return false
+        }
+        return true
+    }
+    function nestedPromise5() {
+        return checkFulfilled(testProperties.finalPromise)
     }
 }

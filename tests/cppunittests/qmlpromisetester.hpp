@@ -38,6 +38,7 @@ private slots:
     void rejectWithArgument() { runTest(__FUNCTION__); }
     void twoResolversWithArgs() { runTest(__FUNCTION__); }
     void twoRejectersWithArg() { runTest(__FUNCTION__); }
+    void nestedPromise() { runTest(__FUNCTION__); }
 };
 
 #endif // QMLPROMISETESTER_HPP
