@@ -1,13 +1,12 @@
 // Author:  Nathan Hourt (https://github.com/nathanhourt/)
 #include "qmlpromisetester.hpp"
 
-#include <QQmlContext>
 #include <QJSValue>
 #include <QtQml>
 
 void QmlPromiseTester::runTest(QString testName) {
     int calls = 0;
-    auto object = engine.rootObjects().first()->metaObject();
+    auto object = testObject->metaObject();
     for (int i = 0; i < object->methodCount(); ++i)
         if (object->method(i).name().startsWith(testName.toLocal8Bit()))
             ++calls;
@@ -19,26 +18,24 @@ void QmlPromiseTester::runTest(QString testName) {
         qDebug() << "Invoking" << callName.c_str();
 
         QVariant passed = false;
-        QMetaObject::invokeMethod(engine.rootObjects().first(), callName.c_str(), Q_RETURN_ARG(QVariant, passed));
+        QMetaObject::invokeMethod(testObject, callName.c_str(), Q_RETURN_ARG(QVariant, passed));
         QVERIFY(passed.toBool());
 
-        qApp->processEvents();
-        engine.collectGarbage();
-        qApp->processEvents();
+        // Wait a few ticks, let promises resolve etc etc
+        // NOTE: 10ms isn't enough time; tests fail. 11ms is. Weird. I would've thought 10 would be PLENTY of time.
+        // Picking 50 for good measure.
+        QEventLoop el;
+        QTimer::singleShot(50, &el, SLOT(quit()));
+        el.exec();
     }
 }
 
-QmlPromiseTester::QmlPromiseTester(QObject *parent) : QObject(parent) {
-    qmlRegisterType<QmlPromiseTester>("tests", 1, 0, "Tester");
-    qmlRegisterUncreatableType<QPPromise>("QuickPromise", 1, 0, "QmlPromise", "");
-    engine.addImportPath("qrc:/");
-    engine.rootContext()->setContextProperty("tester", this);
-    engine.load(QUrl("qrc:/tests.qml"));
-}
+QmlPromiseTester::QmlPromiseTester(QObject* testObject, QObject *parent)
+    : QObject(parent),
+      testObject(testObject) {}
 
 QPPromise* QmlPromiseTester::makePromise() {
-    auto promise = new QPPromise(engine.rootObjects().first());
-    return promise;
+    return new QPPromise(testObject);
 }
 
 QJSValue QmlPromiseTester::getScriptPromise(QPPromise* promise) {

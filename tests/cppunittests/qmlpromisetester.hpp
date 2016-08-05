@@ -14,12 +14,12 @@ class QmlPromiseTester : public QObject
 {
     Q_OBJECT
 
-    QQmlApplicationEngine engine;
+    QObject* testObject;
 
     void runTest(QString testName);
 
 public:
-    explicit QmlPromiseTester(QObject *parent = 0);
+    explicit QmlPromiseTester(QObject* testObject, QObject *parent = 0);
     virtual ~QmlPromiseTester() {}
 
     Q_INVOKABLE QPPromise* makePromise();
