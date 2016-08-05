@@ -1,5 +1,6 @@
 #include "qmlpromisetester.hpp"
 #include <QQmlContext>
+#include <QtQml>
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
