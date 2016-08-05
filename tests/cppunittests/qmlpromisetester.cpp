@@ -22,14 +22,13 @@ void QmlPromiseTester::runTest(QString testName) {
         QMetaObject::invokeMethod(engine.rootObjects().first(), callName.c_str(), Q_RETURN_ARG(QVariant, passed));
         QVERIFY(passed.toBool());
 
-        app.processEvents();
+        qApp->processEvents();
         engine.collectGarbage();
-        app.processEvents();
+        qApp->processEvents();
     }
 }
 
-QmlPromiseTester::QmlPromiseTester(QObject *parent) : QObject(parent), app(argc, (char**)argv) {
-    connect(&engine, &QQmlApplicationEngine::quit, &app, &QApplication::quit);
+QmlPromiseTester::QmlPromiseTester(QObject *parent) : QObject(parent) {
     qmlRegisterType<QmlPromiseTester>("tests", 1, 0, "Tester");
     qmlRegisterUncreatableType<QPPromise>("QuickPromise", 1, 0, "QmlPromise", "");
     engine.addImportPath("qrc:/");
@@ -45,5 +44,3 @@ QPPromise* QmlPromiseTester::makePromise() {
 QJSValue QmlPromiseTester::getScriptPromise(QPPromise* promise) {
     return *promise;
 }
-
-QTEST_MAIN(QmlPromiseTester)

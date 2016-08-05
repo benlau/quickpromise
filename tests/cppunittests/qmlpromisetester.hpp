@@ -16,17 +16,13 @@ class QmlPromiseTester : public QObject
 
     int argc = 0;
     char argv[1][17] = {{"qmlpromisetester"}};
-    QApplication app;
     QQmlApplicationEngine engine;
 
     void runTest(QString testName);
 
 public:
     explicit QmlPromiseTester(QObject *parent = 0);
-    virtual ~QmlPromiseTester() {
-        // Otherwise it crashes on exit. Not sure why, but I don't care: it's a test app and the tests are done.
-        _Exit(0);
-    }
+    virtual ~QmlPromiseTester() {}
 
     Q_INVOKABLE QPPromise* makePromise();
     Q_INVOKABLE QJSValue getScriptPromise(QPPromise* promise);
