@@ -14,8 +14,6 @@ class QmlPromiseTester : public QObject
 {
     Q_OBJECT
 
-    int argc = 0;
-    char argv[1][17] = {{"qmlpromisetester"}};
     QQmlApplicationEngine engine;
 
     void runTest(QString testName);
