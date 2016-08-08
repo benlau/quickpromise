@@ -18,6 +18,11 @@ script:
     - make
     - ls
     - ./unittests
+    - cd ../cppunittests
+    - qmake
+    - make
+    - ls
+    - ./cppunittests
     - cd ../promises-aplus-tests/
     - npm install .
     - node ./run.js
