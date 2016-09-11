@@ -103,7 +103,7 @@ Promise.prototype.resolve = function(value) {
         try {
             var newPromise = new Promise();
             value.connect(function() {
-                newPromise.resolve();
+                newPromise.resolve(arguments);
             });
             value = newPromise;
         } catch (e) {
@@ -203,7 +203,7 @@ Promise.prototype.reject = function(reason) {
 
     if (reason && _instanceOfSignal(reason)) {
         reason.connect(function() {
-            promise.reject();
+            promise.reject(arguments);
         });
         return;
     }

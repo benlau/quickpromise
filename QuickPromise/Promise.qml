@@ -29,8 +29,6 @@ QtObject {
 
     property var _promise;
 
-    property var _result
-
     /// Random signature for type checking
     property var ___promiseQmlSignature71237___
 
