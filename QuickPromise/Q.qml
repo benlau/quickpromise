@@ -15,6 +15,18 @@ QtObject {
         return PromiseJS.promise();
     }
 
+    function resolved(result) {
+        var p = PromiseJS.promise();
+        p.resolve(result);
+        return p;
+    }
+
+    function rejected(reason) {
+        var p = PromiseJS.promise();
+        p.reject(reason);
+        return p;
+    }
+
     function all(promises) {
         return Combinator.all(promises);
     }
