@@ -12,18 +12,13 @@ before_install:
     - sudo apt-get install nodejs
     - sh -e /etc/init.d/xvfb start
 script:
+    - ROOTDIR=`pwd`
+    - git clone https://github.com/benlau/qtci.git
+    - source qtci/path.env
     - source /opt/qt53/bin/qt53-env.sh
-    - cd tests/unittests
-    - qmake
-    - make
-    - ls
-    - ./unittests
-    - cd ../cppunittests
-    - qmake
-    - make
-    - ls
-    - ./cppunittests
-    - cd ../promises-aplus-tests/
+    - (rm -rf build;mkdir build; cd build; run-unittests $ROOTDIR/tests/unittests/unittests.pro)
+    - (rm -rf build;mkdir build; cd build; run-unittests $ROOTDIR/tests/cppunittests/cppunittests.pro)
+    - cd tests/promises-aplus-tests/
     - npm install .
     - node ./run.js
 
