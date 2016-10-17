@@ -54,7 +54,8 @@ it will trigger the “onFulfilled” slot via QueuedConnection. *The slot will 
 
 Remarks: The QML Promise component is not fully compliant with Promises/A+ specification.
 
-Related artciles:
+Related articles:
+
 1. [JavaScript Promises with ArcGIS Runtime SDK for Qt | GeoNet](https://geonet.esri.com/community/developers/native-app-developers/arcgis-runtime-sdk-for-qt/blog/2016/07/05/javascript-promises-with-arcgis-runtime-sdk-for-qt)
 
 Feature List
@@ -66,7 +67,7 @@ Feature List
  3. fulfulled , rejected , settled signals
 2. Promise in a Javascript way
  1. Unlike QML component, it don’t need to declare before use it.
- 2. The API interface is fully compatible with [Promises/A+](https://promisesaplus.com/) specification. It is easy to get started.
+ 2. It is fully compatible with [Promises/A+](https://promisesaplus.com/) specification. It is easy to get started.
 3. Extra API
  1. Q.setTimeout() - An implementation of setTimeout() function for QML.
  2. all()/allSettled()  - Create a promise object from an array of promises
