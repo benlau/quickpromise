@@ -57,13 +57,9 @@ static QJSValue provider(QQmlEngine* engine , QJSEngine *scriptEngine) {
     return value;
 }
 
-class QPTimerRegisterHelper {
 
-public:
-    QPTimerRegisterHelper() {
-        qmlRegisterSingletonType("QuickPromise", 1, 0, "QPTimer", provider);
-    }
-};
+static void registerQmlTypes() {
+    qmlRegisterSingletonType("QuickPromise", 1, 0, "QPTimer", provider);
+}
 
-static QPTimerRegisterHelper registerHelper;
-
+Q_COREAPP_STARTUP_FUNCTION(registerQmlTypes)

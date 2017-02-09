@@ -30,3 +30,4 @@
 *.pro.*
 build-*
 node_modules
+*.qmlc
