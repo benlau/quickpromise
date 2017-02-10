@@ -302,7 +302,6 @@ Related Projects
 
 **Libaries**
 
- 1. [benlau/quickpromise](https://github.com/benlau/quickpromise) - Promise library for QML
  1. [benlau/quickcross](https://github.com/benlau/quickcross) - QML Cross Platform Utility Library
  1. [benlau/qsyncable](https://github.com/benlau/qsyncable) - Synchronize data between models
  1. [benlau/testable](https://github.com/benlau/testable) - QML Unit Test Utilities
