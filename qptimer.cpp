@@ -13,22 +13,43 @@ QPTimer::~QPTimer()
 
 }
 
-void QPTimer::setTimeout(QJSValue func, int interval)
+int QPTimer::setTimeout(QJSValue func, int interval)
 {
     // It can't use the Timer from Quick Component to implement the function.
     // Because setTimeout(0) could not be executed in next tick with < Qt 5.4
 
-    QTimer *timer = new QTimer(this);
+    int id = startTimer(interval);
 
-    connect(timer,SIGNAL(timeout()),
-            this,SLOT(onTriggered()),Qt::QueuedConnection);
+    callbacks[id] = func;
 
-    QVariant v = QVariant::fromValue<QJSValue>(func);
+    return id;
+}
 
-    timer->setProperty("__quick_promise_func___",v);
-    timer->setInterval(interval);
-    timer->setSingleShot(true);
-    timer->start();
+void QPTimer::clearTimeout(int id)
+{
+    if (callbacks.contains(id)) {
+        killTimer(id);
+        callbacks.remove(id);
+    }
+}
+
+void QPTimer::timerEvent(QTimerEvent *event)
+{
+    int id = event->timerId();
+
+    QJSValue func = callbacks[id];
+
+    callbacks.remove(id);
+
+    QJSValue res = func.call();
+
+    if (res.isError()) {
+        qDebug() << "Q.setTimeout() - Uncaught exception at line"
+                 << res.property("lineNumber").toInt()
+                 << ":" << res.toString();
+    }
+
+    killTimer(id);
 }
 
 void QPTimer::onTriggered()

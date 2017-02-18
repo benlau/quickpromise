@@ -8,7 +8,11 @@ QtObject {
     id : component
 
     function setTimeout(callback,interval) {
-        QPTimer.setTimeout(callback,interval);
+        return QPTimer.setTimeout(callback,interval);
+    }
+
+    function clearTimeout(id) {
+        QPTimer.clearTimeout(id);
     }
 
     function promise() {

@@ -5,6 +5,10 @@
 #include <QtQuickTest/quicktest.h>
 #include <QtCore>
 
+namespace AutoTestRegister {
+    QUICK_TEST_MAIN(QuickTests)
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

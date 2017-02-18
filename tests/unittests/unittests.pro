@@ -12,6 +12,8 @@ SOURCES += main.cpp
 include(../../quickpromise.pri)
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\" BASEDIR=\\\"$$PWD/..\\\"
+DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
+
 
 DISTFILES += \
     tst_promise_resolve_signal.qml \

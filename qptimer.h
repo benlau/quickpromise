@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QJSValue>
+#include <QMap>
 
 /// QuickPromise's timer utility
 
@@ -14,11 +15,17 @@ public:
     ~QPTimer();
 
     /// Implement the setTimeout function by C++.
-    Q_INVOKABLE void setTimeout(QJSValue func,int interval);
+    Q_INVOKABLE int setTimeout(QJSValue func,int interval);
+
+    Q_INVOKABLE void clearTimeout(int id);
+
+protected:
+    void timerEvent(QTimerEvent *event);
 
 private:
-
     Q_INVOKABLE void onTriggered();
+
+    QMap<int, QJSValue> callbacks;
 
 };
 
