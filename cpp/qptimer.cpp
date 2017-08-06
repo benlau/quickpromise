@@ -78,9 +78,13 @@ static QJSValue provider(QQmlEngine* engine , QJSEngine *scriptEngine) {
     return value;
 }
 
-
-static void registerQmlTypes() {
+void registerQuickPromiseQmlTypes() {
+    static bool called = false;
+    if (called) {
+        return;
+    }
+    called = true;
     qmlRegisterSingletonType("QuickPromise", 1, 0, "QPTimer", provider);
 }
 
-Q_COREAPP_STARTUP_FUNCTION(registerQmlTypes)
+Q_COREAPP_STARTUP_FUNCTION(registerQuickPromiseQmlTypes)

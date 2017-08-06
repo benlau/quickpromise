@@ -4,6 +4,7 @@
 #include <QStringList>
 #include <QtQuickTest/quicktest.h>
 #include <QtCore>
+#include <QuickPromise>
 
 namespace AutoTestRegister {
     QUICK_TEST_MAIN(QuickTests)

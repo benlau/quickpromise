@@ -9,6 +9,7 @@ RESOURCES += \
     $$PWD/qml/quickpromise.qrc
 
 HEADERS += \
+    $$PWD/cpp/QuickPromise \
     $$PWD/cpp/qptimer.h \
     $$PWD/cpp/qppromise.h
 
