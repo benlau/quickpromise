@@ -1,20 +1,20 @@
 QT += qml
 CONFIG += c++11
 
-QML_IMPORT_PATH += $$PWD
+QML_IMPORT_PATH += $$PWD/qml
 
-INCLUDEPATH += $$PWD
+INCLUDEPATH += $$PWD/cpp
 
 RESOURCES += \
-    $$PWD/quickpromise.qrc
+    $$PWD/qml/quickpromise.qrc
 
 HEADERS += \
-    $$PWD/qptimer.h \
-    $$PWD/qppromise.h
+    $$PWD/cpp/qptimer.h \
+    $$PWD/cpp/qppromise.h
 
 SOURCES += \
-    $$PWD/qptimer.cpp \
-    $$PWD/qppromise.cpp
+    $$PWD/cpp/qptimer.cpp \
+    $$PWD/cpp/qppromise.cpp
 
 DISTFILES += \
     $$PWD/README.md
