@@ -13,7 +13,7 @@ include(../../quickpromise.pri)
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\" BASEDIR=\\\"$$PWD/..\\\"
 DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
-
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 
 DISTFILES += \
     tst_promise_resolve_signal.qml \

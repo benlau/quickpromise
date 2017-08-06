@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var fileData = fs.readFileSync('../../QuickPromise/promise.js',
+var fileData = fs.readFileSync('../../qml/QuickPromise/promise.js',
                                'utf8');
 
 var res = fileData.replace(/.pragma library/i,"")
