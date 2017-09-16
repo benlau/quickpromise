@@ -1,21 +1,20 @@
 language : cpp
+dist: trusty
 env:
   - DISPLAY=:99.0
 compiler:
   - gcc
 before_install:
-    - sudo add-apt-repository --yes ppa:beineri/opt-qt551
     - sudo add-apt-repository --yes ppa:chris-lea/node.js
     - sudo apt-get update -qq
-    - apt-cache search qt5
-    - sudo apt-get install -qq qt55quickcontrols  qt55declarative qt55script qt55graphicaleffects
     - sudo apt-get install nodejs
     - sh -e /etc/init.d/xvfb start
 script:
     - ROOTDIR=`pwd`
     - git clone https://github.com/benlau/qtci.git
     - source qtci/path.env
-    - source /opt/qt55/bin/qt55-env.sh
+    - qt-5.5.1
+    - source qt-5.5.1.env
     - (rm -rf build;mkdir build; cd build; run-unittests $ROOTDIR/tests/unittests/unittests.pro)
     - (rm -rf build;mkdir build; cd build; run-unittests $ROOTDIR/tests/cppunittests/cppunittests.pro)
     - cd tests/promises-aplus-tests/
