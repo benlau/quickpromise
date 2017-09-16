@@ -251,6 +251,7 @@ Promise.prototype.reject = function(reason) { ... }
 
 Instruction of using then/resolve/reject: [Promises](https://www.promisejs.org/)
 
+[Example Code](https://github.com/benlau/quickpromise/blob/master/tests/unittests/tst_promisejs_examples.qml)
 
 Extra API
 ---------

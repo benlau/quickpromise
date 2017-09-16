@@ -32,3 +32,5 @@ build-*
 node_modules
 *.qmlc
 *.jsc
+
+*.swp
