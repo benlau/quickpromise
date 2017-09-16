@@ -4,18 +4,18 @@ env:
 compiler:
   - gcc
 before_install:
-    - sudo add-apt-repository --yes ppa:beineri/opt-qt532
+    - sudo add-apt-repository --yes ppa:beineri/opt-qt551
     - sudo add-apt-repository --yes ppa:chris-lea/node.js
     - sudo apt-get update -qq
     - apt-cache search qt5
-    - sudo apt-get install -qq qt53quickcontrols  qt53declarative qt53script qt53graphicaleffects
+    - sudo apt-get install -qq qt55quickcontrols  qt55declarative qt55script qt55graphicaleffects
     - sudo apt-get install nodejs
     - sh -e /etc/init.d/xvfb start
 script:
     - ROOTDIR=`pwd`
     - git clone https://github.com/benlau/qtci.git
     - source qtci/path.env
-    - source /opt/qt53/bin/qt53-env.sh
+    - source /opt/qt55/bin/qt55-env.sh
     - (rm -rf build;mkdir build; cd build; run-unittests $ROOTDIR/tests/unittests/unittests.pro)
     - (rm -rf build;mkdir build; cd build; run-unittests $ROOTDIR/tests/cppunittests/cppunittests.pro)
     - cd tests/promises-aplus-tests/
