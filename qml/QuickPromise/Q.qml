@@ -15,8 +15,8 @@ QtObject {
         QPTimer.clearTimeout(id);
     }
 
-    function promise() {
-        return PromiseJS.promise();
+    function promise(executor) {
+        return PromiseJS.promise(executor);
     }
 
     function resolved(result) {

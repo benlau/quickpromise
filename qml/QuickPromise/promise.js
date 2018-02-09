@@ -7,7 +7,7 @@
 /* JavaScript implementation of promise object
  */
 
-function Promise() {
+function Promise(executor) {
 
     this.state = "pending";
 
@@ -22,6 +22,21 @@ function Promise() {
     this.isSettled = false;
     this.isFulfilled = false;
     this.isRejected = false;
+
+    if (typeof executor === "function") {
+        var promise = this;
+
+        try {
+            executor(function() {
+                promise.resolve.apply(promise, arguments);
+            }, function() {
+                promise.reject.apply(promise, arguments);
+            });
+
+        } catch(e) {
+            promise.reject(e);
+        }
+    }
 }
 
 function instanceOfPromiseJS(object) {
@@ -89,8 +104,9 @@ Promise.prototype.then = function(onFulfilled,onRejected) {
 
 
 Promise.prototype.resolve = function(value) {
-    if (this.state !== "pending")
+    if (this.state !== "pending") {
         return;
+    }
 
     if (this === value) { // 2.3.1
         this.reject(new TypeError("Promise.resolve(value) : The value can not be same as the promise object."));
@@ -252,6 +268,6 @@ Promise.prototype._setState = function(state) {
 }
 
 
-function promise() {
-    return new Promise();
+function promise(executor) {
+    return new Promise(executor);
 }
