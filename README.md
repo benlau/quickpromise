@@ -235,7 +235,7 @@ Listen the signal, once it is triggered, it will call reject().
 Q.promise()
 ===========
 
-Q.promise() is the creator function of Promise object in a Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. But it don't support property binding (resolveWhen , rejectWhen) like the Promise QML component.
+Q.promise(executor) is the creator function of Promise object in a Javascript way. You won't need to declare a QML component before use it. As it is fully compliant with Promise/A+ specification, it is very easy to get started. But it don't support property binding (resolveWhen , rejectWhen) like the Promise QML component.
 
 However, you may still pass a signal object to resolve()/reject(). In this case, the promise will not change its state until the signal is triggered. If multiple signal call are made, the first signal call takes precedence, and any further calls are ignored.
 
