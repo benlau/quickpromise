@@ -7,9 +7,9 @@ TestCase {
     name : "APlusSpec"
 
     function tick() {
-        wait(0);
-        wait(0);
-        wait(0);
+        for (var i = 0 ; i < 4; i++) {
+            wait(0);
+        }
     }
 
     // The implementation is based on Promises/A+

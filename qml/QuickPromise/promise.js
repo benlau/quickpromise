@@ -99,6 +99,13 @@ Promise.prototype.then = function(onFulfilled,onRejected) {
         }
     });
 
+    if (this.state !== "pending") {
+        var promise = this;
+        QP.QPTimer.setTimeout(function() {
+            promise._executeThen();
+        },0);
+    }
+
     return thenPromise;
 }
 
@@ -204,11 +211,9 @@ Promise.prototype._resolveInTick = function(value) {
  */
 
 Promise.prototype._resolveUnsafe = function(value) {
-
-    this._emit(this._onFulfilled,value);
-
     this._result = value;
     this._setState("fulfilled");
+    this._executeThen();
 }
 
 Promise.prototype.reject = function(reason) {
@@ -233,10 +238,9 @@ Promise.prototype.reject = function(reason) {
 }
 
 Promise.prototype._rejectUnsafe = function(reason) {
-    this._emit(this._onRejected,reason);
-
     this._result = reason;
     this._setState("rejected");
+    this._executeThen();
 }
 
 Promise.prototype._emit = function(arr,value) {
@@ -252,17 +256,28 @@ Promise.prototype._emit = function(arr,value) {
     return res;
 }
 
+/// Execute the registered "then" function
+Promise.prototype._executeThen = function() {
+    var arr = [];
+
+    if (this.state === "rejected") {
+        arr = this._onRejected;
+    } else if (this.state === "fulfilled") {
+        arr = this._onFulfilled;
+    }
+
+    this._emit(arr, this._result);
+    this._onFulfilled = [];
+    this._onRejected = [];
+}
+
 Promise.prototype._setState = function(state) {
     if (state === "fulfilled") {
         this.isFulfilled = true;
         this.isSettled = true;
-        this._onFullfilled = [];
-        this._onRejected = [];
     } else if (state === "rejected"){
         this.isRejected = true;
         this.isSettled = true;
-        this._onFullfilled = [];
-        this._onRejected = [];
     }
     this.state = state;
 }

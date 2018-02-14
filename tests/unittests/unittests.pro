@@ -29,4 +29,5 @@ DISTFILES += \
     tst_promisejs_resolve_qt_binding.qml \
     tst_timer.qml \
     tst_promisejs_examples.qml \
-    tst_promisejs_executor.qml
+    tst_promisejs_executor.qml \
+    tst_promisejs_then.qml
