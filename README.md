@@ -106,7 +106,7 @@ engine.addImportPath("qrc:///"); // QQmlEngine
 import QuickPromise 1.0
 ```
 
-Installation Instruction
+Installation Instruction (no QPM)
 ========================
 
  1) Clone this repository or download release to a folder within your source tree.
@@ -126,6 +126,26 @@ engine.addImportPath("qrc:///"); // QQmlEngine
 ```
 import QuickPromise 1.0
 ```
+
+Minimal Installation
+====================
+
+Since v1.0.8, the C++ setTimeout function is deprecated and therefore it becomes a pure JavaScript library. You may copy the content of QuickPromise folder to your application.
+
+In case you only need the JavaScript's promise. You only need to copy two files to your source code. They are
+
+```
+QuickPromise/promise.js
+QuickPromise/PromiseTimer.qml
+```
+
+Usage
+
+```qml
+import "./promise.js" as Q
+```
+
+Reference: [Q.promise()](#qpromise)
 
 What is Promise and how to use it?
 ==========================
@@ -244,12 +264,13 @@ But it don't support to resolve by the result of Qt.binding(). It will just thro
 *API*
 
 ```
-Promise.prototype.then = function(onFulfilled,onRejected) { ... }
-Promise.prototype.resolve = function(value) { ... }
-Promise.prototype.reject = function(reason) { ... }
+Promise(executor)
+Promise.then = function(onFulfilled,onRejected) { ... }
+Promise.resolve = function(result) { ... }
+Promise.reject = function(reason) { ... }
 ```
 
-Instruction of using then/resolve/reject: [Promises](https://www.promisejs.org/)
+Instruction of using then/resolve/reject: [Promise](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
 [Example Code](https://github.com/benlau/quickpromise/blob/master/tests/unittests/tst_promisejs_examples.qml)
 

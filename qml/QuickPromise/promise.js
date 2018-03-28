@@ -24,7 +24,11 @@ function setTimeout(callback, timeout) {
 
     var obj = timerCreator.createObject(null, {interval: timeout});
     obj.triggered.connect(function() {
-        callback();
+        try {
+            callback();
+        } catch (e) {
+            console.warn(e);
+        }
         obj.destroy();
         delete _timers[tid];
     });
@@ -313,6 +317,26 @@ Promise.prototype._setState = function(state) {
 
 function promise(executor) {
     return new Promise(executor);
+}
+
+function resolve(result) {
+    var p = promise();
+    p.resolve(result);
+    return p;
+}
+
+function resolved(result) {
+    return resolve(result);
+}
+
+function reject(reason) {
+    var p = promise();
+    p.reject(reason);
+    return p;
+}
+
+function rejected(reason) {
+    return reject(reason);
 }
 
 /* Combinator */
