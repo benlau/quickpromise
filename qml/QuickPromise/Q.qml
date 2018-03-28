@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import "promise.js" as PromiseJS
-import "combinator.js" as Combinator
 import QuickPromise 1.0
 pragma Singleton
 
@@ -32,11 +31,11 @@ QtObject {
     }
 
     function all(promises) {
-        return Combinator.all(promises);
+        return PromiseJS.all(promises);
     }
 
     function allSettled(promises) {
-        return Combinator.allSettled(promises)
+        return PromiseJS.allSettled(promises)
     }
 
     function instanceOfPromise(promise) {
