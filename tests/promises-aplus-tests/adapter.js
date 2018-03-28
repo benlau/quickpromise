@@ -5,6 +5,8 @@ var fileData = fs.readFileSync('../../qml/QuickPromise/promise.js',
 
 var res = fileData.replace(/.pragma library/i,"")
                   .replace(/.import.*/i,"")
+		  .replace(/.*createComponent.*/i,"")
+		  .replace(/.*function setTimeout/i,"function __setTimeout")
                   .replace(/QP.QPTimer./g,"");
 
 eval(res);

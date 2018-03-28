@@ -2,7 +2,36 @@
 // Author:  Ben Lau (https://github.com/benlau)
 
 .pragma library
-.import QuickPromise 1.0 as QP
+
+var _nextId = 0;
+var _timers = {}
+
+var timerCreator = Qt.createComponent("PromiseTimer.qml");
+
+function clearTimeout(timerId) {
+    if (!_timers.hasOwnProperty(timerId)) {
+        return;
+    }
+    var timer = _timers[timerId];
+    timer.stop();
+    timer.destroy();
+    delete _timers[timerId];
+}
+
+function setTimeout(callback, timeout) {
+
+    var tid = ++_nextId;
+
+    var obj = timerCreator.createObject(null, {interval: timeout});
+    obj.triggered.connect(function() {
+        callback();
+        obj.destroy();
+        delete _timers[tid];
+    });
+    obj.running = true;
+    _timers[tid] = obj;
+    return tid;
+}
 
 /* JavaScript implementation of promise object
  */
@@ -101,7 +130,7 @@ Promise.prototype.then = function(onFulfilled,onRejected) {
 
     if (this.state !== "pending") {
         var promise = this;
-        QP.QPTimer.setTimeout(function() {
+        setTimeout(function() {
             promise._executeThen();
         },0);
     }
@@ -198,7 +227,7 @@ Promise.prototype.resolve = function(value) {
 Promise.prototype._resolveInTick = function(value) {
     var promise = this;
 
-    QP.QPTimer.setTimeout(function() {
+    setTimeout(function() {
         if (promise.state !== "pending")
             return;
 
@@ -229,7 +258,7 @@ Promise.prototype.reject = function(reason) {
         return;
     }
 
-    QP.QPTimer.setTimeout(function() {
+    setTimeout(function() {
         if (promise.state !== "pending")
             return;
 
@@ -281,7 +310,6 @@ Promise.prototype._setState = function(state) {
     }
     this.state = state;
 }
-
 
 function promise(executor) {
     return new Promise(executor);

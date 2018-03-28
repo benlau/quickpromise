@@ -8,6 +8,7 @@ TestCase {
     function tick() {
         wait(0);
         wait(0);
+        gc();
         wait(0);
     }
 
