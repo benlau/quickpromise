@@ -16,7 +16,6 @@ script:
     - qt-5.5.1
     - source qt-5.5.1.env
     - (rm -rf build;mkdir build; cd build; run-unittests $ROOTDIR/tests/unittests/unittests.pro)
-    - (rm -rf build;mkdir build; cd build; run-unittests $ROOTDIR/tests/cppunittests/cppunittests.pro)
     - cd tests/promises-aplus-tests/
     - npm install .
     - node ./run.js

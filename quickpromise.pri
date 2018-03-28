@@ -9,13 +9,9 @@ RESOURCES += \
     $$PWD/qml/quickpromise.qrc
 
 HEADERS += \
-    $$PWD/cpp/QuickPromise \
-    $$PWD/cpp/qptimer.h \
-    $$PWD/cpp/qppromise.h
+    $$PWD/cpp/QuickPromise
 
-SOURCES += \
-    $$PWD/cpp/qptimer.cpp \
-    $$PWD/cpp/qppromise.cpp
+SOURCES +=
 
 DISTFILES += \
     $$PWD/README.md
