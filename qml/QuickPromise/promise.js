@@ -6,7 +6,7 @@
 var _nextId = 0;
 var _timers = {}
 
-var timerCreator = Qt.createComponent("PromiseTimer.qml");
+var _timerCreator = Qt.createComponent("PromiseTimer.qml");
 
 function clearTimeout(timerId) {
     if (!_timers.hasOwnProperty(timerId)) {
@@ -22,7 +22,7 @@ function setTimeout(callback, timeout) {
 
     var tid = ++_nextId;
 
-    var obj = timerCreator.createObject(null, {interval: timeout});
+    var obj = _timerCreator.createObject(null, {interval: timeout});
     obj.triggered.connect(function() {
         try {
             callback();

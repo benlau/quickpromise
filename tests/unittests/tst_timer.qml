@@ -44,6 +44,7 @@ TestSuite {
         Q.clearTimeout(id);
         wait(100);
         compare(count, 0);
+        compare(Object.keys(Q._timers).length, 0);
     }
 
 }
