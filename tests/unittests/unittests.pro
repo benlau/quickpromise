@@ -30,4 +30,5 @@ DISTFILES += \
     tst_timer.qml \
     tst_promisejs_examples.qml \
     tst_promisejs_executor.qml \
-    tst_promisejs_then.qml
+    tst_promisejs_then.qml \
+    tst_promisejs_minimal.qml

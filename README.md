@@ -143,6 +143,14 @@ Usage
 
 ```qml
 import "./promise.js" as Q
+
+....
+
+/// Q.promise is the creator function of promise. It is equivalent to "new Promise()" in modern browser
+
+var promise = new Q.Promise(function(resolve,reject) {
+  ....
+});
 ```
 
 Reference: [Q.promise()](#qpromise)
@@ -261,13 +269,19 @@ However, you may still pass a signal object to resolve()/reject(). In this case,
 
 But it don't support to resolve by the result of Qt.binding(). It will just throw exception. In this case, you should use a QML Promise and pass it to resolveWhen property.
 
+
+Remarks: Q.promise(executor) is equivalent to `new Q.Promise(executor)`.
+
 *API*
 
 ```
-Promise(executor)
-Promise.then = function(onFulfilled,onRejected) { ... }
-Promise.resolve = function(result) { ... }
-Promise.reject = function(reason) { ... }
+Q.Promise(executor)
+Q.Promise.prototype.then = function(onFulfilled,onRejected) { ... }
+Q.Promise.resolve = function(result) { ... }
+Q.Promise.reject = function(reason) { ... }
+Q.Promise.all = function(promises) { }
+Q.Promise.allSettled = function(promises) { }
+
 ```
 
 Instruction of using then/resolve/reject: [Promise](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise)

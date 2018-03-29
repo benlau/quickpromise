@@ -445,3 +445,7 @@ function allSettled(promises) {
 
     return combinator._combined;
 }
+
+Promise.all = all;
+Promise.resolve = resolve;
+Promise.reject = reject;
