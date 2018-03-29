@@ -16,7 +16,11 @@ TestCase {
         var callbackResult = {}
 
         var promise = new Q.Promise(function(resolve, reject) {
-           resolve("ready") ;
+           resolve("ready");
+        });
+
+        promise.then(function(result) {
+            callbackResult.result = result;
         });
 
         tick();
