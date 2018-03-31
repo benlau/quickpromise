@@ -2,4 +2,6 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS += tests/unittests
+SUBDIRS += qml tests/unittests
+
+unittests.depends = qml

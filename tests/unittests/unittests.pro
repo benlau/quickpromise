@@ -9,11 +9,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-include(../../quickpromise.pri)
-
 DEFINES += SRCDIR=\\\"$$PWD/\\\" BASEDIR=\\\"$$PWD/..\\\"
 DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
+
+LIBS += -L../../qml -lquickpromise
 
 DISTFILES += \
     tst_promise_resolve_signal.qml \

@@ -12,6 +12,8 @@ namespace AutoTestRegister {
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    Q_INIT_RESOURCE(quickpromise);
+
     QString importPath = "qrc:///";
     QStringList args = a.arguments();
     QString executable = args.takeAt(0);
