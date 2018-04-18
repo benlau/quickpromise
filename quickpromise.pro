@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS += tests/unittests
+SUBDIRS += plugin tests/unittests
+unittests.depends = plugin
