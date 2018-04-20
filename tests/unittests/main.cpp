@@ -21,9 +21,9 @@ int main(int argc, char *argv[])
     char **s = (char**) malloc(sizeof(char*) * 10 );
     int idx = 0;
     s[idx++] = executable.toUtf8().data();
-    s[idx++] = "-import";
+    s[idx++] = strdup("-import");
     s[idx++] = strdup(SRCDIR);
-    s[idx++] = "-import";
+    s[idx++] = strdup("-import");
     s[idx++] = strdup(importPath.toLocal8Bit().data());
 
     foreach( QString arg,args) {
