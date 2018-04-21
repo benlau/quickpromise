@@ -15,7 +15,7 @@ script:
     - source qtci/path.env
     - qt-5.5.1
     - source qt-5.5.1.env
-    - (rm -rf build;mkdir build; cd build; qmake ../quickpromise.pro; find; ./tests/unittests/unittests)
+    - (rm -rf build;mkdir build; cd build; qmake ../quickpromise.pro; make; find; ./tests/unittests/unittests)
     - cd ${ROOTDIR}/tests/promises-aplus-tests/
     - npm install .
     - node ./run.js

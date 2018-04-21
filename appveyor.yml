@@ -18,6 +18,6 @@ build_script:
   - mkdir build
   - cd build
   - qmake ../quickpromise.pro
-  - nmake
   - tree /F /A
+  - nmake
   - tests\unittests\unittests.exe
