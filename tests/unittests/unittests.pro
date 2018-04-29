@@ -13,7 +13,19 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\" BASEDIR=\\\"$$PWD/..\\\"
 DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 
-LIBS += -L${OUT_PWD}../../staticlib -lquickpromise
+win32 {
+
+    CONFIG(release) {
+        LIBS += -L${OUT_PWD}../../lib/Release
+    } else {
+        LIBS += -L${OUT_PWD}../../lib/Debug
+    }
+
+} else {
+    LIBS += -L${OUT_PWD}../../lib
+}
+
+LIBS += -lquickpromise
 
 DISTFILES += \
     tst_promise_resolve_signal.qml \

@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 
 CONFIG += ordered
+CONFIG += staticlib
 
-SUBDIRS += staticlib tests/unittests
-unittests.depends = staticlib
+SUBDIRS += lib tests/unittests
+unittests.depends = lib
