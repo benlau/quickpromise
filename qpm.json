@@ -1,6 +1,6 @@
 {
   "name": "com.github.benlau.quickpromise",
-  "description": "Promise library for QML",
+  "description": "Promise library for QML/JS",
   "author": {
     "name": "Ben Lau",
     "email": "xbenlau@gmail.com"
