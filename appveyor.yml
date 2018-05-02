@@ -13,6 +13,7 @@ environment:
 install:
   - pip.exe install conan
   - conan --version
+  - python --version
 
 build_script:
   - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64

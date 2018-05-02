@@ -17,7 +17,7 @@ class QuickPromiseConan(ConanFile):
     exports_sources = "*.pro", "*.pri", "*.js", "*.h" , "*.cpp", "*.qml", "!tests/*", "*/qmldir", "*.qrc"
 
     def package_id(self):
-        version_info = subprocess.run(['qmake', '--version'], stdout=subprocess.PIPE).stdout
+        version_info = subprocess.check_output(['qmake', '--version'])
         self.info.settings.compiler.qmake = version_info
 
     def make(self):
@@ -47,6 +47,7 @@ class QuickPromiseConan(ConanFile):
 
         qconanextra_json = {}
         qconanextra_json["resource"] = "quickpromise"
+        qconanextra_json["qml_import_path"] = "qml"
 
         with open(os.path.join(self.package_folder, "qconanextra.json"), "w") as file:
             file.write(json.dumps(qconanextra_json))
