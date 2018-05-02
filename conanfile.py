@@ -1,6 +1,8 @@
 from conans import ConanFile, tools
 import os
 import json
+import platform
+import subprocess
 
 class QuickPromiseConan(ConanFile):
     name = "quickpromise"
@@ -14,14 +16,28 @@ class QuickPromiseConan(ConanFile):
     exports = "qconanextra.json"
     exports_sources = "*.pro", "*.pri", "*.js", "*.h" , "*.cpp", "*.qml", "!tests/*", "*/qmldir", "*.qrc"
 
+    def package_id(self):
+        version_info = subprocess.run(['qmake', '--version'], stdout=subprocess.PIPE).stdout
+        self.info.settings.compiler.qmake = version_info
+
+    def make(self):
+        if platform.system() == "Windows":
+            self.run("nmake")
+        else:
+            self.run("make")
+
+    def qmake(self, args):
+        cmd = "qmake %s" % (" ".join(args))
+        self.run(cmd)
+
     def build(self):
-        args = []
+        args = ["%s/lib/lib.pro" % self.source_folder]
+
         if self.options.shared:
-            args.append("CONFIG+=no_staticlib");
+            args.append("CONFIG+=no_staticlib")
             
-        qmake = "qmake %s/lib/lib.pro %s" % (self.source_folder, " ".join(args));
-        self.run(qmake)
-        self.run("make")
+        self.qmake(args)
+        self.make()
 
     def package(self):
         self.copy("*.a", dst="lib", keep_path=False)
