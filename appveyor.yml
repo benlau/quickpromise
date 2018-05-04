@@ -21,6 +21,7 @@ build_script:
   - set QTDIR=C:\Qt\5.8\msvc2015_64
   - set PATH=%PATH%;%QTDIR%\bin;C:\MinGW\bin;%GOPATH%\bin;
   - conan create . internal/testing
+  - tree /F /A C:\Users\appveyor\.conan\data\quickpromise
   - mkdir build
   - cd build
   - qmake ../quickpromise.pro

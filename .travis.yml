@@ -20,4 +20,6 @@ script:
     - cd ${ROOTDIR}/tests/promises-aplus-tests/
     - npm install .
     - node ./run.js
+    - cd ${ROOTDIR}
+    - conan create . internal/testing
 

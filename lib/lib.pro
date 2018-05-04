@@ -6,6 +6,13 @@ TARGET = quickpromise
     CONFIG += staticlib
 }
 
+isEmpty(INSTALL_ROOT) {
+    target.path = $$[QT_INSTALL_LIBS]
+} else {
+    target.path = $${INSTALL_ROOT}
+}
+
+INSTALLS += target
 include(../quickpromise.pri)
 
 
