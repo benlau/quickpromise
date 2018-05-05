@@ -18,20 +18,21 @@ class QuickPromiseConan(ConanFile):
 
     def package_id(self):
         version_info = subprocess.check_output(['qmake', '--version'])
-        self.info.settings.compiler.qmake = version_info
+        self.info.settings.compiler.qmake_version = version_info
 
-    def make(self):
+    def make(self, args=[]):
         if platform.system() == "Windows":
-            self.run("nmake")
+            self.run("nmake %s" % " ".join(args))
         else:
-            self.run("make")
+            self.run("make %s" % " ".join(args))
 
-    def qmake(self, args):
+    def qmake(self, args=[]):
         cmd = "qmake %s" % (" ".join(args))
         self.run(cmd)
 
     def build(self):
-        args = ["%s/lib/lib.pro" % self.source_folder]
+        args = ["%s/lib/lib.pro" % self.source_folder,
+                "INSTALL_ROOT=%s" % self.package_folder]
 
         if self.options.shared:
             args.append("CONFIG+=no_staticlib")
@@ -40,9 +41,7 @@ class QuickPromiseConan(ConanFile):
         self.make()
 
     def package(self):
-        self.copy("*.a", dst="lib", keep_path=False)
-        self.copy("*.dylib", dst="lib", keep_path=False)
-        self.copy("*.dll", dst="lib", keep_path=False)
+        self.make(["install"])
         self.copy("*", src="qml/QuickPromise", dst="qml/QuickPromise", keep_path=True)
 
         qconanextra_json = {}
