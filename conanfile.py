@@ -31,11 +31,11 @@ class QuickPromiseConan(ConanFile):
         self.run(cmd)
 
     def build(self):
-        args = ["%s/lib/lib.pro" % self.source_folder,
+        args = ["%s/qml/qml.pro" % self.source_folder,
                 "INSTALL_ROOT=%s" % self.package_folder]
 
         if self.options.shared:
-            args.append("CONFIG+=no_staticlib")
+            args.append("SHARED=true")
             
         self.qmake(args)
         self.make()
@@ -45,7 +45,8 @@ class QuickPromiseConan(ConanFile):
         self.copy("*", src="qml/QuickPromise", dst="qml/QuickPromise", keep_path=True)
 
         qconanextra_json = {}
-        qconanextra_json["resource"] = "quickpromise"
+        if not self.options.shared:
+            qconanextra_json["resource"] = "quickpromise"
         qconanextra_json["qml_import_path"] = "qml"
 
         with open(os.path.join(self.package_folder, "qconanextra.json"), "w") as file:
@@ -53,4 +54,6 @@ class QuickPromiseConan(ConanFile):
             file.close()
 
     def package_info(self):
-        self.cpp_info.libs = ["quickpromise"]
+        if not self.options.shared:
+            self.cpp_info.libs = ["quickpromise"]
+            self.cpp_info.libdirs = [""]

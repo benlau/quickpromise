@@ -32,7 +32,6 @@ int main(int argc, char *argv[])
 
     s[idx++] = 0;
 
-
     const char *name = "QuickPromise";
     const char *source = SRCDIR;
 
