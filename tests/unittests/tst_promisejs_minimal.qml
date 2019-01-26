@@ -14,7 +14,7 @@ TestCase {
     function test_constructor() {
         var callbackResult = {}
 
-        var promise = new Q.Promise(function(resolve, reject) {
+        var promise = Q.promise(function(resolve, reject) {
            resolve("ready");
         });
 
@@ -28,7 +28,7 @@ TestCase {
     }
 
     function test_resolve() {
-        var promise = Q.Promise.resolve("done");
+        var promise = Q.resolved("done");
         var callbackResult = {}
         promise.then(function(result) {
             callbackResult.result = result;

@@ -40,8 +40,7 @@ function setTimeout(callback, timeout) {
 /* JavaScript implementation of promise object
  */
 
-function Promise(executor) {
-
+function QPromise(executor) {
     this.state = "pending";
 
     this._onFulfilled = [];
@@ -96,8 +95,8 @@ function _instanceOfSignal(object) {
             typeof object.disconnect === "function";
 }
 
-Promise.prototype.then = function(onFulfilled,onRejected) {
-    var thenPromise = new Promise();
+QPromise.prototype.then = function(onFulfilled,onRejected) {
+    var thenPromise = new QPromise();
 
     this._onFulfilled.push(function(value) {
         if (typeof onFulfilled === "function" ) {
@@ -143,7 +142,7 @@ Promise.prototype.then = function(onFulfilled,onRejected) {
 }
 
 
-Promise.prototype.resolve = function(value) {
+QPromise.prototype.resolve = function(value) {
     if (this.state !== "pending") {
         return;
     }
@@ -157,7 +156,7 @@ Promise.prototype.resolve = function(value) {
 
     if (value && _instanceOfSignal(value)) {
         try {
-            var newPromise = new Promise();
+            var newPromise = new QPromise();
             value.connect(function() {
                 newPromise.resolve(arguments);
             });
@@ -228,7 +227,7 @@ Promise.prototype.resolve = function(value) {
     this._resolveInTick(value);
 }
 
-Promise.prototype._resolveInTick = function(value) {
+QPromise.prototype._resolveInTick = function(value) {
     var promise = this;
 
     setTimeout(function() {
@@ -243,13 +242,13 @@ Promise.prototype._resolveInTick = function(value) {
      Resolve without value type checking
  */
 
-Promise.prototype._resolveUnsafe = function(value) {
+QPromise.prototype._resolveUnsafe = function(value) {
     this._result = value;
     this._setState("fulfilled");
     this._executeThen();
 }
 
-Promise.prototype.reject = function(reason) {
+QPromise.prototype.reject = function(reason) {
     if (this.state !== "pending")
         return;
 
@@ -270,13 +269,13 @@ Promise.prototype.reject = function(reason) {
     },0);
 }
 
-Promise.prototype._rejectUnsafe = function(reason) {
+QPromise.prototype._rejectUnsafe = function(reason) {
     this._result = reason;
     this._setState("rejected");
     this._executeThen();
 }
 
-Promise.prototype._emit = function(arr,value) {
+QPromise.prototype._emit = function(arr,value) {
     var res = value;
     for (var i = 0 ; i < arr.length;i++) {
         var func = arr[i];
@@ -290,7 +289,7 @@ Promise.prototype._emit = function(arr,value) {
 }
 
 /// Execute the registered "then" function
-Promise.prototype._executeThen = function() {
+QPromise.prototype._executeThen = function() {
     var arr = [];
 
     if (this.state === "rejected") {
@@ -304,7 +303,7 @@ Promise.prototype._executeThen = function() {
     this._onRejected = [];
 }
 
-Promise.prototype._setState = function(state) {
+QPromise.prototype._setState = function(state) {
     if (state === "fulfilled") {
         this.isFulfilled = true;
         this.isSettled = true;
@@ -316,7 +315,7 @@ Promise.prototype._setState = function(state) {
 }
 
 function promise(executor) {
-    return new Promise(executor);
+    return new QPromise(executor);
 }
 
 function resolve(result) {
@@ -343,7 +342,7 @@ function rejected(reason) {
 
 // Combinate a list of promises into a single promise object.
 function Combinator(promises,allSettled) {
-    this._combined = new Promise();
+    this._combined = new QPromise();
     this._allSettled = allSettled === undefined ? false  : allSettled;
     this._promises = [];
     this._results = [];
@@ -375,7 +374,7 @@ Combinator.prototype._addPromises = function(promises) {
 
 Combinator.prototype._addPromise = function(promise) {
     if (_instanceOfSignal(promise)) {
-        var delegate = new Promise();
+        var delegate = new QPromise();
         delegate.resolve(promise);
         this._addCheckedPromise(delegate);
     } else if (promise.isSettled) {
@@ -446,6 +445,6 @@ function allSettled(promises) {
     return combinator._combined;
 }
 
-Promise.all = all;
-Promise.resolve = resolve;
-Promise.reject = reject;
+QPromise.all = all;
+QPromise.resolve = resolve;
+QPromise.reject = reject;
