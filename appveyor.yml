@@ -28,4 +28,5 @@ build_script:
   - qmake ../quickpromise.pro
   - tree /F /A
   - nmake
-  - tests\unittests\unittests.exe
+  - tree /F /A
+  - tests\unittests\debug\unittests.exe
