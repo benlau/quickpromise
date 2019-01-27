@@ -14,14 +14,12 @@ DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 
 win32 {
-    message($${OUT_PWD})
-
-    CONFIG(release) {
-        LIBS += -L${OUT_PWD}../../../lib/Release
+    message(${OUT_PWD})
+    CONFIG(debug, debug|release) {
+        LIBS += -L${OUT_PWD}/../../../qml/debug
     } else {
-        LIBS += -L${OUT_PWD}../../../lib/Debug
+        LIBS += -L${OUT_PWD}/../../../qml/release
     }
-
 } else {
     LIBS += -L${OUT_PWD}../../qml
 }
