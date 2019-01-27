@@ -29,4 +29,4 @@ build_script:
   - tree /F /A
   - nmake
   - tree /F /A
-  - tests\unittests\debug\unittests.exe
+  - tests\unittests\release\unittests.exe
