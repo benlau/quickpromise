@@ -23,8 +23,8 @@ TestSuite {
         timer.start();
         wait(10);
         compare(promise1.isRejected,false);
-        wait(50);
-        compare(promise1.isRejected,true);
+
+        tryCompare(promise1, 'isRejected', true);
     }
 
     QtObject {
