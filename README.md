@@ -14,7 +14,7 @@ Moreover, it also provides Promise as a Javascript object that don’t need to d
 
 *Example:*
 
-```
+```qml
 import QtQuick 2.0
 import QuickPromise 1.0
 
@@ -23,9 +23,9 @@ Item {
     opacity: 0
 
     Image {
-        id : image
+        id: image
         asynchronous: true
-        source : "https://lh3.googleusercontent.com/_yimBU8uLUTqQQ9gl5vODqDufdZ_cJEiKnx6O6uNkX6K9lT63MReAWiEonkAVatiPxvWQu7GDs8=s640-h400-e365-rw";
+        source: "https://lh3.googleusercontent.com/_yimBU8uLUTqQQ9gl5vODqDufdZ_cJEiKnx6O6uNkX6K9lT63MReAWiEonkAVatiPxvWQu7GDs8=s640-h400-e365-rw";
     }
 
     Timer {
@@ -37,7 +37,7 @@ Item {
         // Resolve when the image is ready
         resolveWhen: image.status === Image.Ready
 
-        // Reject when time out.
+        // Reject when time out
         rejectWhen: timer.triggered
 
         onFulfilled:  {
@@ -46,7 +46,6 @@ Item {
         }
     }
 }
-
 ```
 
 The code above demonstrated how Promise component could be used in asynchronous workflow for QML application.
@@ -74,15 +73,14 @@ Feature List
  1. Q.setTimeout() - An implementation of setTimeout() function for QML.
  2. all()/allSettled()  - Create a promise object from an array of promises
 
-Installation Instruction (qpm)
+Installation Instruction (using qpm)
 ==============================
 
 For user who are already using qpm from [qpm.io](https://qpm.io)
 
-
  1) Run `qpm install`
 
-```
+```sh
 $ qpm install com.github.benlau.quickpromise
 ```
 
@@ -90,23 +88,23 @@ $ qpm install com.github.benlau.quickpromise
 
 You may skip this step if you are already using qpm.
 
-```
+```qmake
 include(vendor/vendor.pri)
 ```
 
  3) Add "qrc://" to your QML import path
 
-```
+```qml
 engine.addImportPath("qrc:///"); // QQmlEngine
 ```
 
  4) Add import statement in your QML file
 
-```
+```qml
 import QuickPromise 1.0
 ```
 
-Installation Instruction (no QPM)
+Installation Instruction (without qpm)
 ========================
 
  1) Clone this repository or download release to a folder within your source tree.
@@ -117,13 +115,13 @@ Installation Instruction (no QPM)
 
  3) Add "qrc://" to your QML import path
 
-```
+```cpp
 engine.addImportPath("qrc:///"); // QQmlEngine
 ```
 
  4) Add import statement in your QML file
 
-```
+```qml
 import QuickPromise 1.0
 ```
 
@@ -144,12 +142,10 @@ Usage
 ```qml
 import "./promise.js" as Q
 
-....
+// ...
 
-/// Q.promise is the creator function of promise. It is equivalent to "new Promise()" in modern browser
-
-var promise = new Q.Promise(function(resolve,reject) {
-  ....
+var promise = new Q.Promise(function(resolve, reject) {
+    // ...
 });
 ```
 
@@ -158,18 +154,18 @@ Reference: [Q.promise()](#qpromise)
 What is Promise and how to use it?
 ==========================
 
-Please refer to this site for core concept : [Promises](https://www.promisejs.org/)
+Please refer to this site for core concept: [Promises](https://www.promisejs.org/)
 
-Promise QML Componnet
+Promise QML Component
 =====================
 
-```
+```qml
 Promise {
     property bool isFulfilled
 
     property bool isRejected
 
-    property bool isSettled : isFulfilled || isRejected
+    property bool isSettled: isFulfilled || isRejected
 
     /// An expression that will trigger resolve() if the value become true or another promise object got resolved.
     property var resolveWhen
@@ -183,9 +179,9 @@ Promise {
 
     signal settled(var value)
 
-    function setTimeout(func,timeout) { ... }
+    function setTimeout(func, timeout) { ... }
 
-    function then(onFulfilled,onRejected) { ... }
+    function then(onFulfilled, onRejected) { ... }
 
     function resolve(value) { ... }
 
@@ -198,14 +194,16 @@ Promise {
 ```
 
 **isFullfilled**
+
 It is true if resolve() has been called on that promise object
 
 **isRejected**
+
 It is true if reject() has been called on that promise object
 
 **isSettled**
-It is true if either of isFullfilled or isRejected has been set.
 
+It is true if either of isFullfilled or isRejected has been set.
 
 **resolveWhen**
 
@@ -219,16 +217,17 @@ Once the expression become true, it will trigger resolve(true).
 
 Listen the signal, once it is triggered, it will call resolve().
 
-Example:
-```
+_Example:_
+
+```qml
 Timer {
-    id: timer;
+    id: timer
     repeat: true
-    interval : 50
+    interval: 50
 }
 
 Promise {
-    id : promise
+    id: promise
     resolveWhen: timer.onTriggered
 }
 ```
@@ -270,18 +269,17 @@ However, you may still pass a signal object to resolve()/reject(). In this case,
 But it don't support to resolve by the result of Qt.binding(). It will just throw exception. In this case, you should use a QML Promise and pass it to resolveWhen property.
 
 
-Remarks: Q.promise(executor) is equivalent to `new Q.Promise(executor)`.
+Remarks: `Q.promise(executor)` is equivalent to `new Q.Promise(executor)`.
 
 *API*
 
-```
+```js
 Q.Promise(executor)
 Q.Promise.prototype.then = function(onFulfilled,onRejected) { ... }
 Q.Promise.resolve = function(result) { ... }
 Q.Promise.reject = function(reason) { ... }
 Q.Promise.all = function(promises) { }
 Q.Promise.allSettled = function(promises) { }
-
 ```
 
 Instruction of using then/resolve/reject: [Promise](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise)
@@ -291,7 +289,7 @@ Instruction of using then/resolve/reject: [Promise](https://developer.mozilla.or
 Extra API
 ---------
 
-**Q.setTimeout(func,milliseconds)**
+**Q.setTimeout(func, milliseconds)**
 
 The setTimeout() method will wait the specified number of milliseconds, and then execute the specified function. If the milliseconds is equal to zero, the behaviour will be same as triggering a signal via QueuedConnection.
 
@@ -311,28 +309,24 @@ Advanced Usage
 1. Resolve by multiple signals.
 -------------------------------
 
-
-```
-
+```qml
 Promise {
     resolveWhen: Q.all([timer.triggered, loader.loaded]);
 }
-
 ```
 
 2. Resolve by signal and binary expression
 ------------------------------------------
 
-```
+```qml
 Promise {
     resolveWhen: Q.all([timer.triggered, promise2]);
 
     Promise {
-        id : promise2
+        id: promise2
         resolveWhen: image.status === Image.Ready
     }
 }
-
 ```
 
 Related Projects
